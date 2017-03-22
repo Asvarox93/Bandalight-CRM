@@ -39,7 +39,7 @@ import { Component, OnInit } from '@angular/core';
 
           <img class="img-fluid mx-auto d-block" src="../../../assets/header/bandalight.png" alt="Brand Logo">
           <p class="lead text-center">
-            <a class="btn btn-primary btn-lg" href="#" role="button">ZAŁÓŻ DARMOWE KONTO</a>
+            <a class="btn btn-primary btn-lg btn-hover" href="#" role="button">ZAŁÓŻ DARMOWE KONTO</a>
           </p>
           <hr class="my-4">
           <p class="text-center">DARMOWY SYSTEM <span class="text-col">CRM</span></p>
@@ -49,6 +49,10 @@ import { Component, OnInit } from '@angular/core';
   </div>
   `,
   styles: [`
+  .btn-hover:hover{
+    background: #fff;
+    color: #ff8213;
+  }
   .text-col{
     color: #ff8213;
   }
@@ -72,7 +76,9 @@ import { Component, OnInit } from '@angular/core';
   }
 
   .cpanel:hover{
-    color: red !important;
+    color: #ff8213 !important;
+    background-color:#fff;
+    transition: 0.5s ease-in-out;
   }
   .jumbotron{
     min-height:600px;

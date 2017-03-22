@@ -1,0 +1,65 @@
+.container{
+    color:#8b8a8a;
+    font-size: 0.6em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    
+    .row{
+        margin-top:30px;
+    }
+    span{
+        color:#ff8213;
+    }
+    
+    hr{
+        border-width: 1px;
+        border-color: #8b8a8a ;
+    }
+
+
+    .hr-line{
+        width:150px;
+        margin: 20px auto;
+        border-bottom: 2px solid #ff8213;
+        
+    }
+    .section-funkcje{
+        margin-top:50px;
+    }
+     .section-funkcje img{
+         height:70px;
+        
+     }
+     .btn-main-color{
+         color:#fff;
+         background:#ff8213;
+         border-color:#f97e11;
+     }
+     .btn-main-color:hover{
+         cursor:pointer;
+         background: #fff;
+         color: #ff8213;
+     }
+    .crm-information-top{
+        margin-bottom:50px;
+    }
+}
+
+@media (min-width: 991px) {
+    .container{
+         font-size: 0.55em;
+    }
+     .crm-inf{
+        margin-top:0px;
+    }
+}
+
+@media (min-width: 1200px) {
+.img-fluid{
+    max-width: 650px;
+    margin-left:20px;
+}
+.crm-inf{
+        margin-top:30px;
+    }
+}
