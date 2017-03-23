@@ -9,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
         <div class="container">
           <nav class="navbar navbar-toggleable-md navbar-light ">
           <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" data-toggle="collapse"  aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
+                  [attr.aria-expanded]="!isCollapsed" data-toggle="collapse"
+                  aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -113,6 +114,7 @@ import { Component, OnInit } from '@angular/core';
   `]
 })
 export class HeaderComponent implements OnInit {
+  isCollapsed;
 
   constructor() { }
 
