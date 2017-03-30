@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { MainPageServiceService, SliderData } from './mainPageService.service';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'sbc-main-page',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  
 
-  ngOnInit() {
+  sliderDate:SliderData = {
+    images: [],
+    text: [],
+    slideNumbers: 0,
+    slideInterval: 0
   }
+
+  
+  slideId = 0;
+
+  constructor(private mainService:MainPageServiceService) {
+    this.sliderDate = this.mainService.getSliderImages();
+    
+     
+   }
+  ngOnInit() {
+    
+  }
+
+
+
+
+
+
+
+
+
+  
 
 }

@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { MainPageServiceService } from './main-page/mainPageService.service';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    MainPageServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
