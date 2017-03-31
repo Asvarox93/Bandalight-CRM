@@ -5,8 +5,11 @@ body{
 }
 
 ngb-carousel{
-    height: 550px;
+    height: 300px;
+    outline : none;
+    border: 0;
 }
+
 .carousel-inner {
     overflow: visible;
 }
@@ -26,4 +29,38 @@ ngb-carousel{
     transition: opacity 1.2s ease-in-out, visibility 1.2s;
 
 }
+.link-main-color{
+   color: #ff8213;
+   cursor: pointer;
+   float:right;
+   font-weight: 700;
+}
+.link-main-color:hover{
+   color: #f97e11;
+   text-decoration: none;
+   font-weight: 500;
+}
+@media (min-width: 576px) { 
+    body{font-size: 10px;}
+    ngb-carousel{
+    height: 320px;
+   }
+}
 
+@media (min-width: 768px) { 
+    ngb-carousel{
+    height: 420px;
+   }
+}
+
+@media (min-width: 992px) {
+   ngb-carousel{
+    height: 550px;
+   }
+}
+
+@media (min-width: 1200px) {
+ngb-carousel{
+    height: 650px;
+}
+}

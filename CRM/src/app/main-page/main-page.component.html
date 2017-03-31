@@ -43,12 +43,18 @@ W sieci dostępnych jest wiele definicji CRM’ów. Pytanie która jest najbardz
 </div>
 <hr>
 <div class='row'>
+<div class="col-md-12 mb-4">
+  <div class="col-sm-12 text-center"> CO OFERUJE CI <span class="main-color">BANDALIGHT?</span></div>
+</div>  
 <div class="col-md-12">
 <ngb-carousel [interval]="sliderDate.slideInterval" >
   <template *ngFor="let page of sliderDate.images; let i = index;" ngbSlide>
-    <img class="carousel-img" [src]="sliderDate.images[i]" alt="Slider Image">
+    <img class="carousel-img fluid-image" [src]="sliderDate.images[i]" alt="Slider Image">
     <div class="carousel-caption">
-      <p [innerHtml]="sliderDate.text[i]"></p>
+      <div class="slider-text-background">
+        <p class="slider-text-area" [innerHtml]="sliderDate.text[i]"></p>
+        <a href="#" class="link-main-color slider-text-area mt-2">Dowiedz się więcej...</a>
+      </div>
     </div>
   </template>
 </ngb-carousel>
