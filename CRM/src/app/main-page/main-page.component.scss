@@ -65,8 +65,34 @@
        font-size: 15px;
     }
 
-
+    .contactNameBorder{
+        padding-bottom:3px;
+        border-bottom:2px solid #f97e11;
+    }
    
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:    #232323;
+        opacity:  0.5;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #232323;
+        opacity:  0.5;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #232323;
+        opacity:  0.5;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color:    #232323;
+        opacity:  0.5;
+        }
+
+    .small{
+        padding-top: 2px;
+        font-size:0.6em;
+        color:    #232323;
+        opacity:  0.8;
+    }
 }
 
 @media (min-width: 991px) {
