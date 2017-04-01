@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MainPageServiceService } from './main-page/mainPageService.service';
 import { OfertaComponent } from './oferta/oferta.component';
+import { PomocPageComponent } from './pomoc-page/pomoc-page.component';
 
 
 
@@ -21,7 +22,8 @@ import { OfertaComponent } from './oferta/oferta.component';
     MainPageComponent,
     HeaderComponent,
     FooterComponent,
-    OfertaComponent
+    OfertaComponent,
+    PomocPageComponent
   ],
   imports: [
     NgbModule.forRoot(),

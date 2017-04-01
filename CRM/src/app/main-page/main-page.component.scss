@@ -8,14 +8,6 @@
     .row{
         margin-top:30px;
     }
-    span{
-        color:#ff8213;
-    }
-    
-    hr{
-        border-width: 1px;
-        border-color: #8b8a8a ;
-    }
 
 
     .hr-line{
@@ -51,7 +43,7 @@
 
    }
    .slider-text-background{
-    padding:5px 0;
+    padding:10px 10px 1px 10px;
     background: rgba(0,0,0,1);
     background: -moz-linear-gradient(left, rgba(0,0,0,1) 39%, rgba(0,0,0,0) 100%);
     background: -webkit-gradient(left top, right top, color-stop(39%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,0)));
