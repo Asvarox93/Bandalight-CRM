@@ -17,22 +17,22 @@ import { Component, OnInit } from '@angular/core';
           <div 	[ngbCollapse]="!isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="#">STRONA GŁÓWNA</a>
+                <a class="nav-link" routerLink="/">STRONA GŁÓWNA</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">OFERTA</a>
+                <a class="nav-link" routerLink="/oferta">OFERTA</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">POMOC</a>
+                <a class="nav-link" routerLink="/pomoc">POMOC</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">KONTAKT</a>
+                <a class="nav-link" routerLink="/kontakt">KONTAKT</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">BLOG</a>
+                <a class="nav-link" routerLink="/blog">BLOG</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link cpanel" href="#">PANEL KLIENTA</a>
+                <a class="nav-link cpanel" href="#/panel-klienta">PANEL KLIENTA</a>
               </li>
             </ul>
           </div>
