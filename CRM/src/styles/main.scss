@@ -4,12 +4,20 @@ body{
     font-weight: 400 !important;
 }
 
+span{
+    color:#ff8213;
+}
+    
+hr{
+    border-width: 1px;
+    border-color: #8b8a8a ;
+}
+
 ngb-carousel{
     height: 300px;
     outline : none;
     border: 0;
 }
-
 
 
 .carousel-inner {
