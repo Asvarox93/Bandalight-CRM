@@ -32,7 +32,7 @@ import { Component, OnInit } from '@angular/core';
                 <a class="nav-link" routerLink="/blog">BLOG</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link cpanel" href="#/panel-klienta">PANEL KLIENTA</a>
+                <a class="nav-link cpanel" routerLink="/panel-klienta">PANEL KLIENTA</a>
               </li>
             </ul>
           </div>

@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+   <div class="col-md-12 mb-4">
+      <div class="col-sm-12 text-center"> DANE <span>KONTAKTOWE</span></div>
+    </div>
+  </div>
+  <div class="row dane-Kontakt">
+    <div class="col-md-6">
+      <div class="row mb-3">
+        <img src="../../assets/kontaktPage/logo.gif" alt="logo" class="date-Img-1 fluid-image">
+        <p class="">Bandalight Sp. z o.o. <br />ul. Witosa 5 <br />39-300 Mielec</p>
+      </div>
+      <div class="row mb-1">
+        <img src="../../assets/kontaktPage/arrow.gif" alt="arrow" class="date-Img-2 fluid-image">
+        <p>KRS: 0000123456<br />NIP: 123-321-80-08<br />Regon: 345261189</p>
+      </div>
+      <div class="row">
+        <img src="../../assets/kontaktPage/phone.gif" alt="phone" class="date-Img-3 fluid-image">
+        <p class="date-3">Tel: (+48)171231212</p>
+      </div>
+      <div class="row">
+        <img src="../../assets/kontaktPage/email.gif" alt="email" class="date-Img-4 fluid-image">
+        <p class="date-4">Mail: info@banda.com</p>
+      </div>
+    </div>
+    <div class="col-md-6 map-border">
+      <sebm-google-map [latitude]="lat" [longitude]="lng" [scrollwheel]='draggable' [styles]="styl" [zoom]='zoom'  [draggable] ='draggable'>
+       <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+      </sebm-google-map>
+    </div>
+  </div>
+  <hr class="mt-4 mb-4">
+  <section id="contactSection" class="mb-4 mt-4">
+    <div class="col-md-12 mb-4">
+      <div class="col-sm-12 text-center"> MASZ PYTANIA? <span class="main-color">NAPISZ</span>!</div>
+    </div>
+    <div class="containerContactSection">
+      <div class="row formSection">
+        <div class="col-md-12">
+          <div class="well well-sm">
+            <div class="col-md-12 alertsInfo">
+            </div>
+            <form id="contactForm" name="contactForm" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name" class="contactNameBorder">
+                                        <span>I</span>mie i <span>N</span>azwisko</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Wprowadz imie i naziwsko." required="required"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="email" class="contactNameBorder">
+                                        <span>A</span>dres <span>E</span>mail</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-envelope">@</span>
+                      </span>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Wprowadz adres email" required="required" /></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="subject" class="contactNameBorder">
+                                        <span>T</span>emat</label>
+                    <input id="subject" name="subject" class="form-control" required="required" placeholder="Wprowadz temat rozmowy">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="message" class="contactNameBorder">
+                                        <span>T</span>reść <span>W</span>iadomości</label>
+                    <textarea name="message" id="message" class="form-control" rows="10" cols="25" required="required" placeholder="Wiadomość która chcesz nam przekazać"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12 form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input text-small" type="checkbox" value="rulesAccept" required>
+                    <p class="text-muted small">- wyrażam zgodę na przetwarzanie moich danych osobowych przez Bandalight, zgodnie 
+z obowiązującym prawem i polityką prywatnośći.</p>
+                  </label>
+                </div>
+                </div>
+                <div class="row">
+                <div class=" mx-auto">
+                  <input type="submit" class="btn btn-lg btn-main-color" value="Wyślij">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
