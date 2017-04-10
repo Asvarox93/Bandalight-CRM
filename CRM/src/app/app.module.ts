@@ -7,6 +7,7 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {routerModule} from './app.routing';
+import {CrmPanelModule} from './crm-panel/crm-panel.module';
 
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -16,7 +17,6 @@ import { MainPageServiceService } from './main-page/mainPageService.service';
 import { OfertaComponent } from './oferta/oferta.component';
 import { PomocPageComponent } from './pomoc-page/pomoc-page.component';
 import { KontaktPageComponent } from './kontakt-page/kontakt-page.component';
-import { PanelKlientaPageComponent } from './panel-klienta-page/panel-klienta-page.component';
 
 
 
@@ -29,7 +29,8 @@ import { PanelKlientaPageComponent } from './panel-klienta-page/panel-klienta-pa
     OfertaComponent,
     PomocPageComponent,
     KontaktPageComponent,
-    PanelKlientaPageComponent
+    
+    
   ],
   imports: [
     NgbModule.forRoot(),
@@ -39,7 +40,8 @@ import { PanelKlientaPageComponent } from './panel-klienta-page/panel-klienta-pa
     BrowserModule,
     FormsModule,
     HttpModule,
-    routerModule
+    routerModule,
+    CrmPanelModule
   ],
   providers: [
     MainPageServiceService

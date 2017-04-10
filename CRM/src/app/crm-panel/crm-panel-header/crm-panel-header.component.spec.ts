@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PanelKlientaPageComponent } from './panel-klienta-page.component';
+import { CrmPanelHeaderComponent } from './crm-panel-header.component';
 
-describe('PanelKlientaPageComponent', () => {
-  let component: PanelKlientaPageComponent;
-  let fixture: ComponentFixture<PanelKlientaPageComponent>;
+describe('CrmPanelHeaderComponent', () => {
+  let component: CrmPanelHeaderComponent;
+  let fixture: ComponentFixture<CrmPanelHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PanelKlientaPageComponent ]
+      declarations: [ CrmPanelHeaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PanelKlientaPageComponent);
+    fixture = TestBed.createComponent(CrmPanelHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

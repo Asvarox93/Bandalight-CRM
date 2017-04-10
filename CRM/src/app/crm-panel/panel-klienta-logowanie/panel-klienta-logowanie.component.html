@@ -1,0 +1,14 @@
+
+<div class="container center" *ngIf='loginValid == false' [ngClass] = "{'invisible': loginValid == true}" >
+      <form class="form-signin text-center " (ngSubmit)="formSubmit()">
+        <h2 class="form-signin-heading">Please <span>Sign In</span></h2>
+        <label for="inputLogin" class="sr-only">Login</label>
+        <input type="text" id="inputLogin" class="form-control" placeholder="Login" name="Login" required autofocus [(ngModel)]='data.login' >
+        <label for="inputHaslo" class="sr-only">Hasło</label>
+        <input type="password" id="inputHaslo" class="form-control mt-3" placeholder="Hasło"  name="Haslo" required [(ngModel)]='data.haslo'>
+        <button class="btn btn-lg btn-main-color btn-block" type="submit">Sign in</button>
+         <span class="text-danger small align-middle" *ngIf='validationError'>
+            {{validationError}}
+         </span>
+      </form>
+ </div>

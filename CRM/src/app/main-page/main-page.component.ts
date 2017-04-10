@@ -1,5 +1,7 @@
 import { MainPageServiceService, SliderData } from './mainPageService.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 
 @Component({

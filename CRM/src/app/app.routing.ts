@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { OfertaComponent } from './oferta/oferta.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { KontaktPageComponent } from './kontakt-page/kontakt-page.component';
-import { PanelKlientaPageComponent } from './panel-klienta-page/panel-klienta-page.component';
+import { PanelKlientaLogowanieComponent } from './crm-panel/panel-klienta-logowanie/panel-klienta-logowanie.component';
+import { CrmPanelGlownyComponent } from './crm-panel/crm-panel-glowny/crm-panel-glowny.component';
 
 
 const routesConfig: Routes = [
@@ -11,7 +12,11 @@ const routesConfig: Routes = [
   {path: 'oferta', component: OfertaComponent},
   {path: 'pomoc', component: PomocPageComponent},
   {path: 'kontakt', component: KontaktPageComponent},
-  {path: 'panel-klienta', component: PanelKlientaPageComponent},      
+  {path: 'panel-klienta', component: PanelKlientaLogowanieComponent},
+  {path: 'panel-glowny', component: CrmPanelGlownyComponent,
+      children:[
+
+      ]},      
   {path: '**', redirectTo: '',pathMatch: 'full'},
 ];
 
