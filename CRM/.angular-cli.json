@@ -18,7 +18,8 @@
       "tsconfig": "tsconfig.json",
       "prefix": "sbc",
       "styles": [
-        "styles/main.scss"
+        "styles/main.scss",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
         

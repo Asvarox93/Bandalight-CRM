@@ -1,117 +1,92 @@
 import { Component, OnInit } from '@angular/core';
 
 
+
 @Component({
   selector: 'sbc-panel-pulpit',
   template: `
   <div class="row">
-    <div class="col-md-4">
-        <div class="card">
-      <div class="card-block">
-      <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-      <i class="fa fa-american-sign-language-interpreting fa-5x" aria-hidden="true"> </i>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+  <div class="col-md-4">
+    <div class="card" routerLink="./zlecenia">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-book fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Tutaj możesz sprawdz swoje aktualne zlecenia </h6>
       </div>
     </div>
     </div>
 
     <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./klienci">
+      <div class="card-block text-center">
+        <h4 class="fa fa-users fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted  mt-3"> Sprawdz bazę swoich aktualnych klientów </h6>
       </div>
     </div>
     </div>
 
     <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./korespondencja">
+      <div class="card-block text-center">
+        <h4 class="fa fa-clipboard fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted  mt-3"> Przechowywaj swoją aktualna korespondencję </h6>
       </div>
     </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row mt-5">
     <div class="col-md-4">
-        <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./pracownicy">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-male fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Lista twoich aktualnych pracowników </h6>
       </div>
     </div>
     </div>
 
     <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./pojazdy">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-car fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Przechowywaj informacje o pojazdach firmowych</h6>
       </div>
     </div>
     </div>
 
     <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./produkty" >
+      <div class="card-block text-center">
+        <h4 class="  fa fa-product-hunt fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Lista aktualnych produktów </h6>
       </div>
     </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+<div class="row mt-5">
+   <div class="col-md-4">
+    <div class="card" routerLink="./finanse">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-money fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Tutaj wystawisz fakturę </h6>
+      </div>
+    </div>
+    </div>
+
+   <div class="col-md-4">
+    <div class="card" routerLink="./kalendarz">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-calendar fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Sprawdz aktualną date </h6>
       </div>
     </div>
     </div>
 
     <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">Card title</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-      </div>
-    </div>
-    </div>
-
-    <div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <i class="fa fa-bath" aria-hidden="true"></i>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+    <div class="card" routerLink="./raporty">
+      <div class="card-block text-center">
+        <h4 class="  fa fa-file-text-o fa-3x"></h4>
+        <h6 class="card-subtitle mb-2 text-muted mt-3"> Zobacz swój zbiór informacji</h6>
       </div>
     </div>
     </div>
@@ -119,8 +94,21 @@ import { Component, OnInit } from '@angular/core';
 </div>
   `,
   styles: [`
-    @import '../../../../node_modules/font-awesome/css/font-awesome.css';
 
+.fa{
+  color:#ff8213;
+}
+.card{
+  margin-bottom:15px;
+}
+.card:hover{
+  overflow:hidden;
+  margin-bottom: 0;
+  border-color:#f97e11;
+  cursor:pointer;
+  font-size: 1.1em;
+  transition: font-size 0.2s ease-in-out;
+}
 
     
   `]
