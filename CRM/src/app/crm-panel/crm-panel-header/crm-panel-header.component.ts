@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crm-panel-header.component.scss']
 })
 export class CrmPanelHeaderComponent implements OnInit {
-
+  isCollapsed;
+  
   constructor() { }
 
   ngOnInit() {

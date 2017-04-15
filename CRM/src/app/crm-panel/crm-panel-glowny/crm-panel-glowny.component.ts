@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CrmPanelGlownyComponent implements OnInit {
 
+  
   constructor(private CrmService: CrmServiceService, private router: Router) { }
 
   ngOnInit() {

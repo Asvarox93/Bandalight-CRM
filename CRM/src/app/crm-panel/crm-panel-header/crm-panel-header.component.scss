@@ -1,0 +1,56 @@
+span{
+    color:#ff8213;
+}
+
+
+.btn-main-color{
+         color:#fff;
+         background:#ff8213;
+         border-color:#f97e11;
+}
+.btn-main-color:hover{
+         cursor:pointer;
+         background: #fff;
+         color: #ff8213;
+}
+
+.fluid-container{
+    
+    font-size: 0.4em;
+    color:#fff;
+
+    .jumbotron{
+        background:#0E0E0E;
+        padding: 15px;
+    }
+    .navbar{
+     
+        margin-top: 20px;
+        padding:0;
+    }
+    .navbar a{
+        color:#fff;
+
+        
+    }
+    .navbar a:hover{
+            color:#ff8213;
+    }
+
+    
+    .nav-link:first-child{
+        padding-left:0;
+    }
+}
+
+@media (max-width:768px) { 
+   .res-mobile{
+       margin-top:50px;
+   }
+}
+
+@media (max-width: 992px) {
+  .res-mob{
+    margin-top:10px;
+  }
+}

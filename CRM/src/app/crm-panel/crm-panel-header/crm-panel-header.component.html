@@ -1,3 +1,62 @@
-<p>
-  crm-panel-header works!
-</p>
+   <div class="fluid-container">
+      <div class="jumbotron">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+               <img class="img-fluid mx-auto d-block" src="../../../../assets/header/bandalight.png" alt="Brand Logo">
+            </div>
+              <div class="col-sm-4 res-mobile">
+                <p>Witaj: <span>%LOGIN%</span></p>
+                <p>Konto: <span>%DARMOWE%</span></p>
+                <a class="btn btn-primary btn-small btn-main-color" href="#" role="button">KUP PAKIET</a>
+              </div>
+              <div class="col-sm-4 res-mobile float-right">
+                <a class="btn btn-primary btn-small " href="#" role="button">USTAWIENIA</a>
+                <a class="btn btn-primary btn-small btn-main-color res-mob" href="#" role="button">WYLOGUJ</a>
+            </div>
+          </div>
+          <nav class="navbar navbar-toggleable-md navbar-light ">
+          <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" data-toggle="collapse"
+                  aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div 	[ngbCollapse]="!isCollapsed" class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./">PULPIT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./zlecenia">ZLECENIA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./klienci">KLIENCI</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./korespondencja">KORESPONDENCJA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./pracownicy">PRACOWNICY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./pojazdy">POJAZDY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./produkty">PRODUKTY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./finanse">FINANSE</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./kalendarz">KALENDARZ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="./raporty">RAPORTY</a>
+              </li>
+            </ul>
+          </div>
+        </nav>          
+      </div>
+    </div>
+  </div>
