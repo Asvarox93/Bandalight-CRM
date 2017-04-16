@@ -7,12 +7,28 @@ import { PanelKlientaLogowanieComponent } from './panel-klienta-logowanie/panel-
 import { CrmPanelGlownyComponent } from './crm-panel-glowny/crm-panel-glowny.component';
 import { CrmPanelHeaderComponent } from './crm-panel-header/crm-panel-header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { PanelPulpitComponent } from './panel-pulpit/panel-pulpit.component';
+import { PanelKlientaRejestracjaComponent } from './panel-klienta-rejestracja/panel-klienta-rejestracja.component';
 
+export const config = {
+    apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
+    authDomain: "crm-bandalight.firebaseapp.com",
+    databaseURL: "https://crm-bandalight.firebaseio.com",
+    projectId: "crm-bandalight",
+    storageBucket: "crm-bandalight.appspot.com",
+    messagingSenderId: "574776466030"
+  };
+
+export const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
 
 @NgModule({
   imports: [
     NgbModule.forRoot(),
+    AngularFireModule.initializeApp(config, myFirebaseAuthConfig),
     CommonModule,
     routerModule,
     FormsModule
@@ -21,7 +37,8 @@ import { PanelPulpitComponent } from './panel-pulpit/panel-pulpit.component';
     PanelKlientaLogowanieComponent,
      CrmPanelGlownyComponent,
       CrmPanelHeaderComponent,
-      PanelPulpitComponent
+      PanelPulpitComponent,
+      PanelKlientaRejestracjaComponent
       ],
   exports:[
     PanelKlientaLogowanieComponent

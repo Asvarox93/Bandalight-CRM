@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CrmServiceService } from '../crm-service.service'
+import { CrmServiceService, User } from '../crm-service.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,23 +9,27 @@ import { Router } from '@angular/router';
 })
 export class PanelKlientaLogowanieComponent implements OnInit {
 
-data = {};
-loginValid;
+
+data:User = {
+  login: "",
+  haslo: "",
+  status: false
+};
+
+
 validationError;
 
 formSubmit(){
-    this.loginValid = this.CrmService.loginFormCheck(this.data);
-    if(this.loginValid == true){
-      this.router.navigateByUrl("/panel-glowny");
-    }else{
-      this.validationError = "Błędny login lub hasło! Spróbuj ponownie."
-    }
+   this.CrmService.loginUser(this.data).then(data => {
+        this.validationError = data;
+        console.log(this.validationError);
+        if(this.validationError.provider == 4){
+          this.router.navigateByUrl("/panel-glowny");
+        }
+      });
 }
 
-  constructor(private CrmService: CrmServiceService, private router: Router) {
-      this.loginValid = this.CrmService.getLoginStatus();
-      console.log(this.loginValid);
-   }
+  constructor(private CrmService: CrmServiceService, private router: Router) {}
   
   ngOnInit() {
 
