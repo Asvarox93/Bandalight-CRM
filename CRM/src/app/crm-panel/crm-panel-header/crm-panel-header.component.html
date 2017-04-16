@@ -6,13 +6,13 @@
                <img class="img-fluid mx-auto d-block" src="../../../../assets/header/bandalight.png" alt="Brand Logo">
             </div>
               <div class="col-sm-4 res-mobile">
-                <p>Witaj: <span>%LOGIN%</span></p>
+                <p>Witaj: <span>{{login}}</span></p>
                 <p>Konto: <span>%DARMOWE%</span></p>
                 <a class="btn btn-primary btn-small btn-main-color" href="#" role="button">KUP PAKIET</a>
               </div>
               <div class="col-sm-4 res-mobile float-right">
                 <a class="btn btn-primary btn-small " href="#" role="button">USTAWIENIA</a>
-                <a class="btn btn-primary btn-small btn-main-color res-mob" href="#" role="button">WYLOGUJ</a>
+                <a class="btn btn-primary btn-small btn-main-color res-mob" (click)="logoutUser()" role="button">WYLOGUJ</a>
             </div>
           </div>
           <nav class="navbar navbar-toggleable-md navbar-light ">

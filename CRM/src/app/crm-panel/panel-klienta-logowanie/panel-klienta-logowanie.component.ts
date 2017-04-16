@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CrmServiceService, User } from '../crm-service.service';
 import { Router } from '@angular/router';
 
@@ -22,17 +22,27 @@ validationError;
 formSubmit(){
    this.CrmService.loginUser(this.data).then(data => {
         this.validationError = data;
-        console.log(this.validationError);
-        if(this.validationError.provider == 4){
+        if(this.validationError.provider === 4){
+          this.CrmService.setUserInfo(this.validationError);
           this.router.navigateByUrl("/panel-glowny");
         }
       });
 }
 
-  constructor(private CrmService: CrmServiceService, private router: Router) {}
+checkUserSession(){
+ let userSession = this.CrmService.userInfo; 
+    if(userSession.provider === 4){
+      this.router.navigateByUrl("/panel-glowny");
+    }
+  
+}
+
+  constructor(private CrmService: CrmServiceService, private router: Router) {
+     this.checkUserSession();
+  }
   
   ngOnInit() {
-
+   
   }
 
 }

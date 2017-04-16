@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CrmServiceService } from '../crm-service.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +9,8 @@ import { Router } from '@angular/router';
 export class CrmPanelGlownyComponent implements OnInit {
 
   
-  constructor(private CrmService: CrmServiceService, private router: Router) { }
+  constructor(private router: Router) {
+   }
 
   ngOnInit() {
   }

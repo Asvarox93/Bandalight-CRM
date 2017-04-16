@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CrmServiceService } from '../crm-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sbc-crm-panel-header',
@@ -7,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrmPanelHeaderComponent implements OnInit {
   isCollapsed;
-  
-  constructor() { }
+  login;
+
+  logoutUser(){
+    this.crmService.logoutUser()
+    this.router.navigateByUrl("/");
+  }
+
+  constructor(private crmService:CrmServiceService, private router: Router) {
+  }
 
   ngOnInit() {
+   this.login =  this.crmService.userInfo.auth.email;
   }
 
 }
