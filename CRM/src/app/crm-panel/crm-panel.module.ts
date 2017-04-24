@@ -10,6 +10,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { PanelPulpitComponent } from './panel-pulpit/panel-pulpit.component';
 import { PanelKlientaRejestracjaComponent } from './panel-klienta-rejestracja/panel-klienta-rejestracja.component';
+import { CrmKlienciComponent } from './crm-klienci/crm-klienci.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -38,7 +39,8 @@ export const myFirebaseAuthConfig = {
      CrmPanelGlownyComponent,
       CrmPanelHeaderComponent,
       PanelPulpitComponent,
-      PanelKlientaRejestracjaComponent
+      PanelKlientaRejestracjaComponent,
+      CrmKlienciComponent
       ],
   exports:[
     PanelKlientaLogowanieComponent

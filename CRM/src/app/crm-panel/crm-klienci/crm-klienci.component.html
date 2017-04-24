@@ -1,0 +1,40 @@
+<div class="container-fluid">
+<div class="row">
+  <div class=" col-md-10 input-group">
+    <span class="input-group-addon" id="basic-addon1">></span>
+    <input type="text" class="form-control" placeholder="Nazwa klienta" aria-describedby="basic-addon1">
+  </div>
+  <div class="col-md-2 input-group">
+    <button class="btn bt-success btn-large">Szukaj</button>
+  </div>
+</div>
+
+
+<div class="row mt-5">
+
+  <table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nazwa Klienta</th>
+      <th>Ulica</th>
+      <th>Kod pocztowy</th>
+      <th>Miasto</th>      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let klient of klienci; let i = index">
+      <th scope="row">{{i}}</th>
+      <td>{{klient.nazwa}}</td>
+      <td>{{klient.ulica}}</td>
+      <td>{{klient.kodPocztowy}}</td>
+      <td>{{klient.miasto}}</td>
+      <td class="btn-info claer">Edytuj</td>
+      <td class="btn-danger claer">Usuń</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+</div>
