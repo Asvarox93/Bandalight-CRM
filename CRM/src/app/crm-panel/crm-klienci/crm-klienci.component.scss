@@ -1,9 +1,22 @@
 .container-fluid{
     font-size:0.6em;
 
+    .btn{
+        cursor: pointer;
+    }
     .clear{
-        padding:0;
-        margin:0;
+        text-align: center;
         cursor:pointer;
+        width:50px;
+    }
+    .btn-main-color{
+         color:#fff;
+         background:#ff8213;
+         border-color:#f97e11;
+    }
+    .btn-main-color:hover{
+            cursor:pointer;
+            background:#e57511;
+            border-color:#f97e11;
     }
 }

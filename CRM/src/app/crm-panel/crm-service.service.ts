@@ -13,6 +13,10 @@ export interface User{
 export class CrmServiceService {
 
 userInfo;
+klientLists;
+klients
+klientStream = new Subject();
+timerSubscription;
 
 
 setUserInfo(info){
@@ -61,11 +65,49 @@ logoutUser(){
   this.setUserInfo("");
 }
 
+sendKlientToDB(data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+  var ref =  database.ref('/users/'+user.uid+'/clients');
+  ref.push(data);
+}
+
+
+getKlientFromDb(){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+  var ref =  database.ref('/users/'+user.uid+'/clients');
+  this.klients = [];
+
+  this.klientLists = [];
+  ref.on('value', (data)=>{
+   
+      this.klientLists = data.val();
+  });
+
+  for(let id of Object.keys(this.klientLists)){
+    this.klients.push(this.klientLists[id]);
+  }
+  this.subscribeToKlientsData();
+  this.klientStream.next(this.klients);
+}
+
+subscribeToGetKleints(){
+  return Observable.from(this.klientStream);
+}
+
+subscribeToKlientsData(){
+    this.timerSubscription = Observable.timer(2000).first().subscribe(() => this.getKlientFromDb());
+}
+
  //   let getLoginValid = JSON.parse(sessionStorage.getItem('currentUser'));
  
   constructor(private af:AngularFire) { 
     if(sessionStorage.getItem('currentUser')){
       this.userInfo = JSON.parse(sessionStorage.getItem('currentUser'));
+      console.log(this.userInfo);
     }
     else{
       this.userInfo = '';

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {routerModule} from '../app.routing';
 import {FormsModule} from '@angular/forms';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {CrmServiceService} from './crm-service.service';
 import { PanelKlientaLogowanieComponent } from './panel-klienta-logowanie/panel-klienta-logowanie.component';
 import { CrmPanelGlownyComponent } from './crm-panel-glowny/crm-panel-glowny.component';
@@ -11,6 +12,7 @@ import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { PanelPulpitComponent } from './panel-pulpit/panel-pulpit.component';
 import { PanelKlientaRejestracjaComponent } from './panel-klienta-rejestracja/panel-klienta-rejestracja.component';
 import { CrmKlienciComponent } from './crm-klienci/crm-klienci.component';
+import { CrmKlienciDodajComponent } from './crm-klienci/crm-klienci-dodaj.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -28,6 +30,7 @@ export const myFirebaseAuthConfig = {
 
 @NgModule({
   imports: [
+    BootstrapModalModule,
     NgbModule.forRoot(),
     AngularFireModule.initializeApp(config, myFirebaseAuthConfig),
     CommonModule,
@@ -40,8 +43,12 @@ export const myFirebaseAuthConfig = {
       CrmPanelHeaderComponent,
       PanelPulpitComponent,
       PanelKlientaRejestracjaComponent,
-      CrmKlienciComponent
+      CrmKlienciComponent,
+      CrmKlienciDodajComponent
       ],
+  entryComponents:[
+    CrmKlienciDodajComponent
+  ],
   exports:[
     PanelKlientaLogowanieComponent
   ],
