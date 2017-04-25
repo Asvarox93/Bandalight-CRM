@@ -86,9 +86,10 @@ getKlientFromDb(){
    
       this.klientLists = data.val();
   });
-
+  if(this.klientLists != undefined){
   for(let id of Object.keys(this.klientLists)){
     this.klients.push(this.klientLists[id]);
+  }
   }
   this.subscribeToKlientsData();
   this.klientStream.next(this.klients);
@@ -99,7 +100,22 @@ subscribeToGetKleints(){
 }
 
 subscribeToKlientsData(){
-    this.timerSubscription = Observable.timer(2000).first().subscribe(() => this.getKlientFromDb());
+    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getKlientFromDb());
+}
+deleteKleintFromDB(name){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.klientLists)[name]);
+  
+  /*ref.equel(Object.keys(name)).once("value",(snapshot)=>{
+    console.log("tak to to:> ",snapshot);
+    snapshot.remove();
+  });*/
+  
+  
+ ref.remove();
+  
 }
 
  //   let getLoginValid = JSON.parse(sessionStorage.getItem('currentUser'));

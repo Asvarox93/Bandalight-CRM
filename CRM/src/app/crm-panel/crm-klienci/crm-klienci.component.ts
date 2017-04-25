@@ -42,6 +42,10 @@ klienci;
             //If dialog was not closed manually close it by timeout
             
         }
+  deleteKlient(data){
+    console.log("data> ",data);
+    this.crmService.deleteKleintFromDB(/*this.klienci*/data);
+  }
 
   ngOnInit() {
     this.crmService.subscribeToGetKleints().subscribe((klients)=>{

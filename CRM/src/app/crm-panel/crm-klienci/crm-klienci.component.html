@@ -29,7 +29,7 @@
       <td>{{klient.kodPocztowy}}</td>
       <td>{{klient.miasto}}</td>
       <td class="btn-info clear">Edytuj</td>
-      <td class="btn-danger clear">Usuń</td>
+      <td class="btn-danger clear" (click)="deleteKlient(i)">Usuń</td>
     </tr>
   </tbody>
 </table>
