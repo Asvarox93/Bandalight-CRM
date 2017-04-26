@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CrmKlienciDodajComponent } from '../crm-klienci/crm-klienci-dodaj.component';
+import { CrmKlienciEdytujComponent } from '../crm-klienci/crm-klienci-edytuj.component';
 import { DialogService } from "ng2-bootstrap-modal";
 import {CrmServiceService} from '../crm-service.service';
 
@@ -30,7 +31,7 @@ klienci;
                 title:'Formularz dodawania klienta', 
                 message:''})
                 .subscribe((isConfirmed)=>{
-                    //We get dialog result
+               
                     if(isConfirmed) {
                         alert('Klient został dodany do bazy danych');
                     }
@@ -41,10 +42,29 @@ klienci;
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
-        }
+  }
+
+  showDeleteConfirm(data) {
+            let disposable = this.dialogService.addDialog(CrmKlienciEdytujComponent, {
+              title:'Formularz edytowania klienta',
+              UserId:data,
+            })
+                .subscribe((isConfirmed)=>{
+                  
+                    if(isConfirmed) {
+                        alert('Dane klienta zostały zmodyfikowane');
+                    }
+                    else {
+                        alert('Dane klienta nie zostały zmodyfikowane');
+                    }
+                });
+            //We can close dialog calling disposable.unsubscribe();
+            //If dialog was not closed manually close it by timeout
+            
+  }
+
   deleteKlient(data){
-    console.log("data> ",data);
-    this.crmService.deleteKleintFromDB(/*this.klienci*/data);
+    this.crmService.deleteKleintFromDB(data);
   }
 
   ngOnInit() {

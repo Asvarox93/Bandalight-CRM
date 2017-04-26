@@ -13,6 +13,7 @@ import { PanelPulpitComponent } from './panel-pulpit/panel-pulpit.component';
 import { PanelKlientaRejestracjaComponent } from './panel-klienta-rejestracja/panel-klienta-rejestracja.component';
 import { CrmKlienciComponent } from './crm-klienci/crm-klienci.component';
 import { CrmKlienciDodajComponent } from './crm-klienci/crm-klienci-dodaj.component';
+import { CrmKlienciEdytujComponent } from './crm-klienci/crm-klienci-edytuj.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -44,10 +45,12 @@ export const myFirebaseAuthConfig = {
       PanelPulpitComponent,
       PanelKlientaRejestracjaComponent,
       CrmKlienciComponent,
-      CrmKlienciDodajComponent
+      CrmKlienciDodajComponent,
+      CrmKlienciEdytujComponent
       ],
   entryComponents:[
-    CrmKlienciDodajComponent
+    CrmKlienciDodajComponent,
+    CrmKlienciEdytujComponent
   ],
   exports:[
     PanelKlientaLogowanieComponent

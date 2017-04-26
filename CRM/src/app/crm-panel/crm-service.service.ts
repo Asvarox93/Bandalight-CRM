@@ -100,21 +100,29 @@ subscribeToGetKleints(){
 }
 
 subscribeToKlientsData(){
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getKlientFromDb());
+    this.timerSubscription = Observable.timer(1200).first().subscribe(() => this.getKlientFromDb());
 }
+
+getKlientToEdit(data){
+  return this.klients[data];
+}
+
+EditKleintToDb(name, data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.klientLists)[name]);
+  ref.update(data);
+  
+}
+
+
 deleteKleintFromDB(name){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
   var database = firebase.database(); 
   var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.klientLists)[name]);
-  
-  /*ref.equel(Object.keys(name)).once("value",(snapshot)=>{
-    console.log("tak to to:> ",snapshot);
-    snapshot.remove();
-  });*/
-  
-  
- ref.remove();
+  ref.remove();
   
 }
 

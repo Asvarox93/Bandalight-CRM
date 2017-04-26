@@ -28,7 +28,7 @@
       <td>{{klient.ulica}}</td>
       <td>{{klient.kodPocztowy}}</td>
       <td>{{klient.miasto}}</td>
-      <td class="btn-info clear">Edytuj</td>
+      <td class="btn-info clear" (click)="showDeleteConfirm(i)">Edytuj</td>
       <td class="btn-danger clear" (click)="deleteKlient(i)">Usuń</td>
     </tr>
   </tbody>
