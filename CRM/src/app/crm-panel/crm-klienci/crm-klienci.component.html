@@ -2,8 +2,8 @@
 <div class="row">
   <div class=" col-md-12 input-group">
     <span class="input-group-addon" id="basic-addon1">></span>
-    <input type="text" class="form-control" placeholder="Nazwa klienta" aria-describedby="basic-addon1">
-    <button class="btn btn-info ml-2 btn-large">Szukaj</button>
+    <input type="text" class="form-control" [(ngModel)]="KlientSearch" placeholder="Nazwa klienta" aria-describedby="basic-addon1">
+    <button class="btn btn-info ml-2 btn-large" (click)="showSearchKlient()">Szukaj</button>
     <button class="btn btn-main-color ml-2 btn-large" (click)="showConfirm()" >Dodaj</button>
   </div>
 </div>

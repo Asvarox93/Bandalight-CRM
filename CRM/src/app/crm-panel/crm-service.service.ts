@@ -13,10 +13,10 @@ export interface User{
 export class CrmServiceService {
 
 userInfo;
-klientLists;
-klients
+$klientLists;
+klients;
 klientStream = new Subject();
-timerSubscription;
+klientData;
 
 
 setUserInfo(info){
@@ -71,36 +71,49 @@ sendKlientToDB(data){
   var database = firebase.database();
   var ref =  database.ref('/users/'+user.uid+'/clients');
   ref.push(data);
+  this.getKlientFromDb();
 }
 
+setKlientData(data){
+ this.klientData = data;
+}
 
 getKlientFromDb(){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
   var database = firebase.database();
-  var ref =  database.ref('/users/'+user.uid+'/clients');
-  this.klients = [];
 
-  this.klientLists = [];
-  ref.on('value', (data)=>{
-   
-      this.klientLists = data.val();
+  var ref =  database.ref('/users/'+user.uid+'/clients');
+ 
+  this.klients = [];
+  this.$klientLists = [];
+
+  ref.on('value', (snapshot)=>{
+      this.$klientLists = snapshot.val();
+
+      if(this.$klientLists != 0 || this.$klientLists != undefined){
+        for(let id of Object.keys(this.$klientLists)){
+        if(this.klientData == ""){
+          this.klients.push(this.$klientLists[id]);
+        }
+        else if(this.klientData != ""){
+          if(this.$klientLists[id].nazwa.lastIndexOf(this.klientData) != -1){
+          this.klients.push(this.$klientLists[id]);
+          }
+        }
+      }
+    }
+     this.klientStream.next(this.klients);
   });
-  if(this.klientLists != undefined){
-  for(let id of Object.keys(this.klientLists)){
-    this.klients.push(this.klientLists[id]);
-  }
-  }
-  this.subscribeToKlientsData();
-  this.klientStream.next(this.klients);
+  
+ 
+ 
 }
+
+
 
 subscribeToGetKleints(){
   return Observable.from(this.klientStream);
-}
-
-subscribeToKlientsData(){
-    this.timerSubscription = Observable.timer(1200).first().subscribe(() => this.getKlientFromDb());
 }
 
 getKlientToEdit(data){
@@ -111,9 +124,10 @@ EditKleintToDb(name, data){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
   var database = firebase.database(); 
-  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.klientLists)[name]);
+  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.$klientLists)[name]);
   ref.update(data);
-  
+  this.getKlientFromDb();
+
 }
 
 
@@ -121,9 +135,9 @@ deleteKleintFromDB(name){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
   var database = firebase.database(); 
-  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.klientLists)[name]);
+  var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.$klientLists)[name]);
   ref.remove();
-  
+  this.getKlientFromDb();
 }
 
  //   let getLoginValid = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -131,7 +145,7 @@ deleteKleintFromDB(name){
   constructor(private af:AngularFire) { 
     if(sessionStorage.getItem('currentUser')){
       this.userInfo = JSON.parse(sessionStorage.getItem('currentUser'));
-      console.log(this.userInfo);
+      this.klientData = "";
     }
     else{
       this.userInfo = '';

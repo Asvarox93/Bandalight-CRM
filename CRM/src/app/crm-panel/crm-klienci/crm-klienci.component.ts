@@ -21,9 +21,10 @@ import {CrmServiceService} from '../crm-service.service';
 export class CrmKlienciComponent implements OnInit {
 
 klienci;
+KlientSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
-    this.klienci = this.crmService.getKlientFromDb();
+    this.crmService.getKlientFromDb();
   }
 
    showConfirm() {
@@ -42,6 +43,11 @@ klienci;
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+
+  showSearchKlient(){
+    this.crmService.setKlientData(this.KlientSearch);
+    this.crmService.getKlientFromDb();
   }
 
   showDeleteConfirm(data) {
@@ -70,7 +76,6 @@ klienci;
   ngOnInit() {
     this.crmService.subscribeToGetKleints().subscribe((klients)=>{
       this.klienci = klients;
-      
     }); 
   }
 
