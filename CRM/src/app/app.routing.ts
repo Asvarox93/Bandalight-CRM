@@ -8,6 +8,7 @@ import { PanelKlientaRejestracjaComponent } from './crm-panel/panel-klienta-reje
 import { CrmPanelGlownyComponent } from './crm-panel/crm-panel-glowny/crm-panel-glowny.component';
 import { PanelPulpitComponent } from './crm-panel/panel-pulpit/panel-pulpit.component';
 import { CrmKlienciComponent } from './crm-panel/crm-klienci/crm-klienci.component';
+import { CrmZleceniaComponent } from './crm-panel/crm-zlecenia/crm-zlecenia.component';
 
 const routesConfig: Routes = [
   {path: '', component: MainPageComponent},
@@ -19,7 +20,8 @@ const routesConfig: Routes = [
   {path: 'panel-glowny', component: CrmPanelGlownyComponent,
       children:[
         {path: '', component: PanelPulpitComponent},
-        {path: 'klienci', component: CrmKlienciComponent}
+        {path: 'klienci', component: CrmKlienciComponent},
+        {path: 'zlecenia', component: CrmZleceniaComponent}
       ]},      
   {path: '**', redirectTo: '',pathMatch: 'full'},
 ];

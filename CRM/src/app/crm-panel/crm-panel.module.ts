@@ -14,6 +14,8 @@ import { PanelKlientaRejestracjaComponent } from './panel-klienta-rejestracja/pa
 import { CrmKlienciComponent } from './crm-klienci/crm-klienci.component';
 import { CrmKlienciDodajComponent } from './crm-klienci/crm-klienci-dodaj.component';
 import { CrmKlienciEdytujComponent } from './crm-klienci/crm-klienci-edytuj.component';
+import { CrmZleceniaComponent } from './crm-zlecenia/crm-zlecenia.component';
+import { CrmZleceniaDodajComponent } from './crm-zlecenia/crm-zlecenia-dodaj.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -46,11 +48,14 @@ export const myFirebaseAuthConfig = {
       PanelKlientaRejestracjaComponent,
       CrmKlienciComponent,
       CrmKlienciDodajComponent,
-      CrmKlienciEdytujComponent
+      CrmKlienciEdytujComponent,
+      CrmZleceniaComponent,
+      CrmZleceniaDodajComponent
       ],
   entryComponents:[
     CrmKlienciDodajComponent,
-    CrmKlienciEdytujComponent
+    CrmKlienciEdytujComponent,
+    CrmZleceniaDodajComponent
   ],
   exports:[
     PanelKlientaLogowanieComponent

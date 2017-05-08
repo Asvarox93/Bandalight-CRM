@@ -4,13 +4,7 @@ import { CrmKlienciEdytujComponent } from '../crm-klienci/crm-klienci-edytuj.com
 import { DialogService } from "ng2-bootstrap-modal";
 import {CrmServiceService} from '../crm-service.service';
 
-/*interface klienci{
-  nazwa:string,
-  ulica:string,
-  kodPocztowy:string,
-  miasto:string
-}
-*/
+
 @Component({
   selector: 'sbc-crm-klienci',
   templateUrl: './crm-klienci.component.html',
@@ -24,9 +18,9 @@ klienci;
 KlientSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
-    this.crmService.getKlientFromDb();
   }
 
+// Wyświetlanie formularza dodawania klienta do bazy danych
    showConfirm() {
             let disposable = this.dialogService.addDialog(CrmKlienciDodajComponent, {
                 title:'Formularz dodawania klienta', 
@@ -45,11 +39,13 @@ KlientSearch:string;
             
   }
 
+//Załadowanie klienta o podanej nazwie z wyszukiwari a następnie odświeżenie listy dodanych klientów
   showSearchKlient(){
     this.crmService.setKlientData(this.KlientSearch);
     this.crmService.getKlientFromDb();
   }
 
+//Pokazuje formularz edycji klienta a następnie wyświetla komunikat potwierdzający modyfikację.
   showDeleteConfirm(data) {
             let disposable = this.dialogService.addDialog(CrmKlienciEdytujComponent, {
               title:'Formularz edytowania klienta',
@@ -69,14 +65,19 @@ KlientSearch:string;
             
   }
 
+//Wysyłanie danych klienta do funkcji usuwającej klienta z bazy danych
   deleteKlient(data){
     this.crmService.deleteKleintFromDB(data);
   }
 
+//Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
   ngOnInit() {
     this.crmService.subscribeToGetKleints().subscribe((klients)=>{
       this.klienci = klients;
     }); 
   }
+  ngAfterContentInit(){
+     this.crmService.getKlientFromDb();
+   }
 
 }
