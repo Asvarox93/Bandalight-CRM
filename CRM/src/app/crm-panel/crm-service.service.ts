@@ -114,7 +114,7 @@ getKlientFromDb(){
   ref.on('value', (snapshot)=>{
       this.$klientLists = snapshot.val();
 
-      if(this.$klientLists != 0 || this.$klientLists != undefined){
+      if(this.$klientLists != null || this.$klientLists != undefined){
         for(let id of Object.keys(this.$klientLists)){
         if(this.klientData == ""){
           this.klients.push(this.$klientLists[id]);
@@ -149,7 +149,7 @@ getOrdersFromDb(){
         if(this.orderData == ""){
           this.orders.push(this.$orderLists[id]);
         }
-        else if(this.klientData != ""){
+        else if(this.orderData != ""){
           if(this.$orderLists[id].nazwa.lastIndexOf(this.orderData) != -1){
           this.orders.push(this.$orderLists[id]);
           }
@@ -172,6 +172,11 @@ subscribeToGetOrders(){
 getKlientToEdit(data){
   return this.klients[data];
 }
+
+//Pobieranie aktualnych danych zlecenia potrzebnych do edycji
+getOrdersToEdit(data){
+  return this.orders[data];
+}
 //Edytowanie klienta w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
 EditKleintToDb(name, data){
   var firebase = require("firebase");
@@ -180,8 +185,20 @@ EditKleintToDb(name, data){
   var ref =  database.ref('/users/'+user.uid+'/clients/'+Object.keys(this.$klientLists)[name]);
   ref.update(data);
   this.getKlientFromDb();
+}
+
+//Edytowanie zlecenia w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
+editOrdersToDb(name, data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/orders/'+Object.keys(this.$orderLists)[name]);
+  console.log("Numer zlecenia: ", Object.keys(this.$orderLists)[name]);
+  ref.update(data);
+  this.getOrdersFromDb();
 
 }
+
 
 //Usuwanie klienta z bazy danych
 deleteKleintFromDB(name){
@@ -193,7 +210,17 @@ deleteKleintFromDB(name){
   this.getKlientFromDb();
 }
 
- //   let getLoginValid = JSON.parse(sessionStorage.getItem('currentUser'));
+//Usuwanie zlecenia z bazy danych
+deleteOrersFromDB(name){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/orders/'+Object.keys(this.$orderLists)[name]);
+  ref.remove();
+  this.getOrdersFromDb();
+}
+
+
  
   constructor(private af:AngularFire) { 
     if(sessionStorage.getItem('currentUser')){

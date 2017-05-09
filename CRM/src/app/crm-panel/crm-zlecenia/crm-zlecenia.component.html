@@ -3,7 +3,7 @@
   <div class=" col-md-12 input-group">
     <span class="input-group-addon" id="basic-addon1">></span>
     <input type="text" class="form-control" [(ngModel)]="OrderSearch" placeholder="Nazwa klienta" aria-describedby="basic-addon1">
-    <button class="btn btn-info ml-2 btn-large" (click)="showSearchOrder()">Szukaj</button>
+    <button class="btn btn-info ml-2 btn-large" (click)="showSearchOrders()">Szukaj</button>
     <button class="btn btn-main-color ml-2 btn-large" (click)="showOrderConfirm()" >Dodaj</button>
   </div>
 </div>
@@ -29,7 +29,7 @@
       <td>{{order.tresc}}</td>
       <td>{{order.pracownik}}</td>
       <td class="btn-info clear" (click)="showEditConfirm(i)">Edytuj</td>
-      <td class="btn-danger clear" (click)="deleteKlient(i)">Usuń</td>
+      <td class="btn-danger clear" (click)="deleteOrders(i)">Usuń</td>
     </tr>
   </tbody>
 </table>

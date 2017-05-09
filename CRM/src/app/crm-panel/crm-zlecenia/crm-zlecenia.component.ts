@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService } from "ng2-bootstrap-modal";
 import {CrmServiceService} from '../crm-service.service';
 import { CrmZleceniaDodajComponent } from '../crm-zlecenia/crm-zlecenia-dodaj.component';
+import { CrmZleceniaEdytujComponent } from '../crm-zlecenia/crm-zlecenia-edytuj.component';
+
 @Component({
   selector: 'sbc-crm-zlecenia',
   templateUrl: './crm-zlecenia.component.html',
@@ -31,12 +33,45 @@ export class CrmZleceniaComponent implements OnInit {
                 });
   }
 
+   showEditConfirm(data) {
+            let disposable = this.dialogService.addDialog(CrmZleceniaEdytujComponent, {
+              title:'Formularz edytowania klienta',
+              UserId:data,
+            })
+                .subscribe((isConfirmed)=>{
+                  
+                    if(isConfirmed) {
+                        alert('Dane klienta zostały zmodyfikowane');
+                    }
+                    else {
+                        alert('Dane klienta nie zostały zmodyfikowane');
+                    }
+                });
+            //We can close dialog calling disposable.unsubscribe();
+            //If dialog was not closed manually close it by timeout
+            
+  }
+
+//Usuwanie wyznaczonego zlecenia przez użytkownika
+  deleteOrders(data){
+    this.crmService.deleteOrersFromDB(data);
+    this.crmService.getOrdersFromDb();
+  }
+
+//Wyszukiwanie zlecenia według podanej frazy
+ showSearchOrders(){
+    this.crmService.setOrderData(this.OrderSearch);
+    this.crmService.getOrdersFromDb();
+  }
+
+//Subskrybuje sie na zmiany w bazie zleceń i aktualizuje je w momencie zmiany.
   ngOnInit() {
      this.crmService.subscribeToGetOrders().subscribe((orders)=>{
       this.orders = orders;
     }); 
   }
 
+//Ładuje zlecenia po załadowaniu całego komponentu
   ngAfterContentInit(){
      this.crmService.getOrdersFromDb();
    }

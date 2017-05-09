@@ -68,6 +68,7 @@ KlientSearch:string;
 //Wysyłanie danych klienta do funkcji usuwającej klienta z bazy danych
   deleteKlient(data){
     this.crmService.deleteKleintFromDB(data);
+    this.crmService.getKlientFromDb();
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
