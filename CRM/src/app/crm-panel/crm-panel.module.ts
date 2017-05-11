@@ -17,6 +17,9 @@ import { CrmKlienciEdytujComponent } from './crm-klienci/crm-klienci-edytuj.comp
 import { CrmZleceniaComponent } from './crm-zlecenia/crm-zlecenia.component';
 import { CrmZleceniaDodajComponent } from './crm-zlecenia/crm-zlecenia-dodaj.component';
 import { CrmZleceniaEdytujComponent } from './crm-zlecenia/crm-zlecenia-edytuj.component';
+import { CrmPracownicyComponent } from './crm-pracownicy/crm-pracownicy.component';
+import { CrmPracownicyDodajComponent } from './crm-pracownicy/crm-pracownicy-dodaj.component';
+import { CrmPracownicyEdytujComponent } from './crm-pracownicy/crm-pracownicy-edytuj.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -52,13 +55,18 @@ export const myFirebaseAuthConfig = {
       CrmKlienciEdytujComponent,
       CrmZleceniaComponent,
       CrmZleceniaDodajComponent,
-      CrmZleceniaEdytujComponent
+      CrmZleceniaEdytujComponent,
+      CrmPracownicyComponent,
+      CrmPracownicyDodajComponent,
+      CrmPracownicyEdytujComponent
       ],
   entryComponents:[
     CrmKlienciDodajComponent,
     CrmKlienciEdytujComponent,
     CrmZleceniaDodajComponent,
-    CrmZleceniaEdytujComponent
+    CrmZleceniaEdytujComponent,
+    CrmPracownicyDodajComponent,
+    CrmPracownicyEdytujComponent
   ],
   exports:[
     PanelKlientaLogowanieComponent

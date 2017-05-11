@@ -9,16 +9,17 @@ import { Router } from '@angular/router';
 })
 export class PanelKlientaLogowanieComponent implements OnInit {
 
-
+//Zbiera dane użytkownika z formularza logowania
 data:User = {
   login: "",
   haslo: "",
   status: false
 };
 
-
+//Zmienna przechowująca błędy logowania
 validationError;
 
+//Funkcja wysyłająca dane użytkownika do serwisu logowania z bazą danych.
 formSubmit(){
    this.CrmService.loginUser(this.data).then(data => {
         this.validationError = data;
@@ -29,6 +30,7 @@ formSubmit(){
       });
 }
 
+//Sprawdza czy istnieje sesja w pamięci przeglądarki z danymi użytkownika.
 checkUserSession(){
  let userSession = this.CrmService.userInfo; 
     if(userSession.provider === 4){

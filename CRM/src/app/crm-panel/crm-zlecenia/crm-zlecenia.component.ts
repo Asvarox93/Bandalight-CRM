@@ -32,7 +32,7 @@ export class CrmZleceniaComponent implements OnInit {
                     }
                 });
   }
-
+//Wyśiwetla formularz edytowania klienta a następnie potwierdza wykonane zmiany komunikatem.
    showEditConfirm(data) {
             let disposable = this.dialogService.addDialog(CrmZleceniaEdytujComponent, {
               title:'Formularz edytowania klienta',
@@ -64,16 +64,17 @@ export class CrmZleceniaComponent implements OnInit {
     this.crmService.getOrdersFromDb();
   }
 
-//Subskrybuje sie na zmiany w bazie zleceń i aktualizuje je w momencie zmiany.
   ngOnInit() {
-     this.crmService.subscribeToGetOrders().subscribe((orders)=>{
-      this.orders = orders;
-    }); 
+  
   }
 
 //Ładuje zlecenia po załadowaniu całego komponentu
-  ngAfterContentInit(){
+  ngAfterContentChecked(){
      this.crmService.getOrdersFromDb();
+     //Subskrybuje sie na zmiany w bazie zleceń i aktualizuje je w momencie zmiany.
+      this.crmService.subscribeToGetOrders().subscribe((orders)=>{
+      this.orders = orders;
+    }); 
    }
 
 

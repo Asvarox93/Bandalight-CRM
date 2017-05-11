@@ -73,12 +73,13 @@ KlientSearch:string;
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
   ngOnInit() {
-    this.crmService.subscribeToGetKleints().subscribe((klients)=>{
+
+  }
+  ngAfterContentChecked(){
+     this.crmService.getKlientFromDb();
+     this.crmService.subscribeToGetKleints().subscribe((klients)=>{
       this.klienci = klients;
     }); 
-  }
-  ngAfterContentInit(){
-     this.crmService.getKlientFromDb();
    }
 
 }
