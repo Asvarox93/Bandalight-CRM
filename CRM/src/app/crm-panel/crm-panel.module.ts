@@ -20,6 +20,9 @@ import { CrmZleceniaEdytujComponent } from './crm-zlecenia/crm-zlecenia-edytuj.c
 import { CrmPracownicyComponent } from './crm-pracownicy/crm-pracownicy.component';
 import { CrmPracownicyDodajComponent } from './crm-pracownicy/crm-pracownicy-dodaj.component';
 import { CrmPracownicyEdytujComponent } from './crm-pracownicy/crm-pracownicy-edytuj.component';
+import { CrmKorespondecjaComponent } from './crm-korespondecja/crm-korespondecja.component';
+import { CrmKorespondencjaDodajComponent } from './crm-korespondecja/crm-korespondencja-dodaj.component';
+import { CrmKorespondencjaEdytujComponent } from './crm-korespondecja/crm-korespondencja-edytuj.component';
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -58,7 +61,10 @@ export const myFirebaseAuthConfig = {
       CrmZleceniaEdytujComponent,
       CrmPracownicyComponent,
       CrmPracownicyDodajComponent,
-      CrmPracownicyEdytujComponent
+      CrmPracownicyEdytujComponent,
+      CrmKorespondecjaComponent,
+      CrmKorespondencjaDodajComponent,
+      CrmKorespondencjaEdytujComponent
       ],
   entryComponents:[
     CrmKlienciDodajComponent,
@@ -66,7 +72,9 @@ export const myFirebaseAuthConfig = {
     CrmZleceniaDodajComponent,
     CrmZleceniaEdytujComponent,
     CrmPracownicyDodajComponent,
-    CrmPracownicyEdytujComponent
+    CrmPracownicyEdytujComponent,
+    CrmKorespondencjaDodajComponent,
+    CrmKorespondencjaEdytujComponent
   ],
   exports:[
     PanelKlientaLogowanieComponent

@@ -32,6 +32,14 @@ $workerLists;
 workerStream = new Subject();
 workerData;
 
+//Zmienne korespondencji
+posts;
+$postLists;
+postStream = new Subject();
+postFileStream = new Subject();
+postData;
+
+
 //Przypisywanie informacji o użytkowaniu do zmiennej userInfo, oraz przchowywanie ich w sesji przeglądarki
 setUserInfo(info){
   this.userInfo = info;
@@ -108,6 +116,29 @@ sendWorkerToDB(data){
   this.getWorkersFromDb();
 }
 
+//Wysyłanie danych nowej korespondencji do bazy danych
+sendPostToDB(data, file){
+  var mainthis = this;
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+  var ref =  database.ref('/users/'+user.uid+'/posts');
+  ref.push(data);
+  var storageRef = firebase.storage().ref(user.uid+"/"+data.plik)
+  var task = storageRef.put(file);
+  
+  task.on('state_changed',
+   function progress(snapshot){
+   var procentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+   mainthis.postFileStream.next(procentage);
+   },
+   function error(err){},
+   function complete(){}
+   );
+
+  this.getPostsFromDb();
+}
+
 //Przypisywanie aktualnych klientów do zmiennej klientData
 setKlientData(data){
  this.klientData = data;
@@ -118,9 +149,14 @@ setOrderData(data){
  this.orderData = data;
 }
 
-//Przypisywanie aktualnych zlecen do zmiennej orderData
+//Przypisywanie aktualnych zlecen do zmiennej workerData
 setWorkerData(data){
  this.workerData = data;
+}
+
+//Przypisywanie aktualnej korespondencji do zmiennej postData
+setPostData(data){
+ this.postData = data;
 }
 
 // Pobieranie aktualnych klientów z bazy danych, oraz przypisywanie ich do odpowiedniej zmiennej
@@ -212,6 +248,35 @@ getWorkersFromDb(){
      this.workerStream.next(this.workers);
   });
 }
+//Pobieranie aktualnyej korespondencji z bazy danych, oraz przypisanie ich do odpowiedniej zmiennej
+getPostsFromDb(){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+
+  var ref =  database.ref('/users/'+user.uid+'/posts');
+ 
+  this.posts = [];
+  this.$postLists = [];
+
+  ref.on('value', (snapshot)=>{
+      this.$postLists = snapshot.val();
+
+     if(this.$postLists != null || this.$postLists != undefined){
+        for(let id of Object.keys(this.$postLists)){
+        if(this.postData == ""){
+          this.posts.push(this.$postLists[id]);
+        }
+        else if(this.postData != ""){
+          if(this.$postLists[id].nazwa.lastIndexOf(this.postData) != -1){
+          this.posts.push(this.$workerLists[id]);
+          }
+        }
+      }
+    }
+     this.postStream.next(this.posts);
+  });
+}
 
 //Tworzenie obiektu do obserwowania klientów na zmianny w innych komponentach
 subscribeToGetKleints(){
@@ -227,6 +292,16 @@ subscribeToGetWorkers(){
   return Observable.from(this.workerStream);
 }
 
+//Tworzenie obiektu do obserwowania korespondencji na zmianny w innych komponentach
+subscribeToGetPosts(){
+  return Observable.from(this.postStream);
+}
+
+//Tworzenie obiektu do obserwowania uploadowanych plików korespondencji na zmianny w innych komponentach
+subscribeToGetPostsFileUploadProgress(){
+  return Observable.from(this.postFileStream);
+}
+
 //Pobieranie aktualnych danych klienta potrzebnych do jego edycji
 getKlientToEdit(data){
   return this.klients[data];
@@ -240,6 +315,11 @@ getOrdersToEdit(data){
 //Pobieranie aktualnych danych pracownika potrzebnych do edycji
 getWorkerToEdit(data){
   return this.workers[data];
+}
+
+//Pobieranie aktualnych danych korespondencji potrzebnych do edycji
+getPostToEdit(data){
+  return this.posts[data];
 }
 
 //Edytowanie klienta w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
@@ -274,6 +354,17 @@ editWorkersToDb(name, data){
 
 }
 
+//Edytowanie korespondencji w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
+editPostsToDb(name, data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/posts/'+Object.keys(this.$postLists)[name]);
+  ref.update(data);
+  this.getPostsFromDb();
+
+}
+
 //Usuwanie klienta z bazy danych
 deleteKleintFromDB(name){
   var firebase = require("firebase");
@@ -304,6 +395,47 @@ deleteWorkerFromDB(name){
   this.getWorkersFromDb();
 }
 
+//Usuwanie pracownika z bazy danych
+deletePostFromDB(name){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/posts/'+Object.keys(this.$postLists)[name]);
+  ref.remove();
+  var storageRef = firebase.storage().ref(user.uid+"/").child(this.posts[name].plik);
+  storageRef.delete();
+  this.getPostsFromDb();
+}
+
+//Pobieranie pliku z korespondencji
+downloadPostFromDB(name){
+  var mainThis = this;
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var storage = firebase.storage(); 
+  var pathRef = storage.ref("/"+user.uid+"/"+this.posts[name].plik);
+  pathRef.getDownloadURL().then(function(url) {
+  //window.open(urls, '_blank', 'toolbar=0,location=0,menubar=0');
+  var filename = mainThis.posts[name].plik;
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = 'blob';
+  xhr.onload = function() {
+    var a = document.createElement('a');
+    a.href = window.URL.createObjectURL(xhr.response); // xhr.response is a blob
+    a.download = filename; // Set the file name.
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+  };
+  xhr.open('GET', url);
+  xhr.send();
+   
+  }).catch(function(error) {
+    console.log(error);
+});
+
+}
+
 
  
   constructor(private af:AngularFire) { 
@@ -312,6 +444,7 @@ deleteWorkerFromDB(name){
       this.klientData = "";
       this.orderData = "";
       this.workerData = "";
+      this.postData = "";
     }
     else{
       this.userInfo = '';

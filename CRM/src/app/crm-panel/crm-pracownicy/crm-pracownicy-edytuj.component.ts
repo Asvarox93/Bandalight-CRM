@@ -87,6 +87,7 @@ workers;
     super(dialogService);
   }
 
+//Wysyła zmienione dane do funkji edytującej aktualne dane użytkownika z podanymi.
   confirm() {
     this.crmService.editWorkersToDb(this.UserId,this.workers);
     this.result = true;
