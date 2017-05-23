@@ -11,7 +11,7 @@ import { CrmKlienciComponent } from './crm-panel/crm-klienci/crm-klienci.compone
 import { CrmZleceniaComponent } from './crm-panel/crm-zlecenia/crm-zlecenia.component';
 import { CrmPracownicyComponent } from './crm-panel/crm-pracownicy/crm-pracownicy.component';
 import { CrmKorespondecjaComponent } from './crm-panel/crm-korespondecja/crm-korespondecja.component';
-
+import { CrmPojazdyComponent } from './crm-panel/crm-pojazdy/crm-pojazdy.component';
 
 
 const routesConfig: Routes = [
@@ -27,7 +27,9 @@ const routesConfig: Routes = [
         {path: 'klienci', component: CrmKlienciComponent},
         {path: 'zlecenia', component: CrmZleceniaComponent},
         {path: 'pracownicy', component: CrmPracownicyComponent},
-        {path: 'korespondencja', component: CrmKorespondecjaComponent}
+        {path: 'korespondencja', component: CrmKorespondecjaComponent},
+        {path: 'pojazdy', component: CrmPojazdyComponent}
+        
         
       ]},      
   {path: '**', redirectTo: '',pathMatch: 'full'},

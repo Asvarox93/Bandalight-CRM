@@ -39,6 +39,13 @@ postStream = new Subject();
 postFileStream = new Subject();
 postData;
 
+//Zmienne pojazdów
+cars;
+$carLists;
+carStream = new Subject();
+carFileStream = new Subject();
+carData;
+
 
 //Przypisywanie informacji o użytkowaniu do zmiennej userInfo, oraz przchowywanie ich w sesji przeglądarki
 setUserInfo(info){
@@ -139,6 +146,16 @@ sendPostToDB(data, file){
   this.getPostsFromDb();
 }
 
+//Wysyłanie danych nowego pojazdu do bazy danych
+sendCarToDB(data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+  var ref =  database.ref('/users/'+user.uid+'/cars');
+  ref.push(data);
+  this.getCarsFromDb();
+}
+
 //Przypisywanie aktualnych klientów do zmiennej klientData
 setKlientData(data){
  this.klientData = data;
@@ -157,6 +174,11 @@ setWorkerData(data){
 //Przypisywanie aktualnej korespondencji do zmiennej postData
 setPostData(data){
  this.postData = data;
+}
+
+//Przypisywanie aktualnych pojazdów do zmiennej postData
+setCarData(data){
+ this.carData = data;
 }
 
 // Pobieranie aktualnych klientów z bazy danych, oraz przypisywanie ich do odpowiedniej zmiennej
@@ -278,6 +300,36 @@ getPostsFromDb(){
   });
 }
 
+//Pobieranie aktualnych pojazdów z bazy danych, oraz przypisanie ich do odpowiedniej zmiennej
+getCarsFromDb(){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+
+  var ref =  database.ref('/users/'+user.uid+'/cars');
+ 
+  this.cars = [];
+  this.$carLists = [];
+
+  ref.on('value', (snapshot)=>{
+      this.$carLists = snapshot.val();
+
+     if(this.$carLists != null || this.$carLists != undefined){
+        for(let id of Object.keys(this.$carLists)){
+        if(this.carData == ""){
+          this.cars.push(this.$carLists[id]);
+        }
+        else if(this.carData != ""){
+          if(this.$carLists[id].marka.lastIndexOf(this.carData) != -1){
+          this.cars.push(this.$carLists[id]);
+          }
+        }
+      }
+    }
+     this.carStream.next(this.cars);
+  });
+}
+
 //Tworzenie obiektu do obserwowania klientów na zmianny w innych komponentach
 subscribeToGetKleints(){
   return Observable.from(this.klientStream);
@@ -302,6 +354,11 @@ subscribeToGetPostsFileUploadProgress(){
   return Observable.from(this.postFileStream);
 }
 
+//Tworzenie obiektu do obserwowania pojazdów na zmianny w innych komponentach
+subscribeToGetCars(){
+  return Observable.from(this.carStream);
+}
+
 //Pobieranie aktualnych danych klienta potrzebnych do jego edycji
 getKlientToEdit(data){
   return this.klients[data];
@@ -320,6 +377,11 @@ getWorkerToEdit(data){
 //Pobieranie aktualnych danych korespondencji potrzebnych do edycji
 getPostToEdit(data){
   return this.posts[data];
+}
+
+//Pobieranie aktualnych danych pojazdów potrzebnych do edycji
+getCarToEdit(data){
+  return this.cars[data];
 }
 
 //Edytowanie klienta w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
@@ -365,6 +427,17 @@ editPostsToDb(name, data){
 
 }
 
+//Edytowanie pjazdów w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
+editCarsToDb(name, data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/cars/'+Object.keys(this.$carLists)[name]);
+  ref.update(data);
+  this.getCarsFromDb();
+}
+
+
 //Usuwanie klienta z bazy danych
 deleteKleintFromDB(name){
   var firebase = require("firebase");
@@ -395,7 +468,7 @@ deleteWorkerFromDB(name){
   this.getWorkersFromDb();
 }
 
-//Usuwanie pracownika z bazy danych
+//Usuwanie korespondencji z bazy danych
 deletePostFromDB(name){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
@@ -405,6 +478,16 @@ deletePostFromDB(name){
   var storageRef = firebase.storage().ref(user.uid+"/").child(this.posts[name].plik);
   storageRef.delete();
   this.getPostsFromDb();
+}
+
+//Usuwanie pojazdów z bazy danych
+deleteCarFromDB(name){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/cars/'+Object.keys(this.$carLists)[name]);
+  ref.remove();
+  this.getCarsFromDb();
 }
 
 //Pobieranie pliku z korespondencji
@@ -421,8 +504,8 @@ downloadPostFromDB(name){
   xhr.responseType = 'blob';
   xhr.onload = function() {
     var a = document.createElement('a');
-    a.href = window.URL.createObjectURL(xhr.response); // xhr.response is a blob
-    a.download = filename; // Set the file name.
+    a.href = window.URL.createObjectURL(xhr.response); // xhr.response otwiera okno zapisu pliku
+    a.download = filename; // Podpowiada pod jaką nazwą zapisać plik.
     a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
@@ -445,6 +528,7 @@ downloadPostFromDB(name){
       this.orderData = "";
       this.workerData = "";
       this.postData = "";
+      this.carData = "";
     }
     else{
       this.userInfo = '';
