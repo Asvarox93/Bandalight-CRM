@@ -28,9 +28,7 @@ import { Component, OnInit } from '@angular/core';
               <li class="nav-item">
                 <a class="nav-link" routerLink="/kontakt">KONTAKT</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/blog">BLOG</a>
-              </li>
+             
               <li class="nav-item">
                 <a class="nav-link cpanel" routerLink="/panel-klienta">PANEL KLIENTA</a>
               </li>
@@ -40,7 +38,7 @@ import { Component, OnInit } from '@angular/core';
 
           <img class="img-fluid mx-auto d-block" src="../../../assets/header/bandalight.png" alt="Brand Logo">
           <p class="lead text-center">
-            <a class="btn btn-primary btn-lg btn-hover" href="#" role="button">ZAŁÓŻ DARMOWE KONTO</a>
+            <a class="btn btn-primary btn-lg btn-hover" routerLink="/rejestracja" role="button">ZAŁÓŻ DARMOWE KONTO</a>
           </p>
           <hr class="my-4">
           <p class="text-center">DARMOWY SYSTEM <span class="text-col">CRM</span></p>

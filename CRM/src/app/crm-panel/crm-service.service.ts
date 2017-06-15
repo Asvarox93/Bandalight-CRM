@@ -43,8 +43,13 @@ postData;
 cars;
 $carLists;
 carStream = new Subject();
-carFileStream = new Subject();
 carData;
+
+//Zmienne praconików
+products;
+$productLists;
+productStream = new Subject();
+productData;
 
 
 //Przypisywanie informacji o użytkowaniu do zmiennej userInfo, oraz przchowywanie ich w sesji przeglądarki
@@ -156,6 +161,16 @@ sendCarToDB(data){
   this.getCarsFromDb();
 }
 
+//Wysyłanie danych nowego produktu do bazy danych
+sendProductToDB(data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+  var ref =  database.ref('/users/'+user.uid+'/products');
+  ref.push(data);
+  this.getProductsFromDb();
+}
+
 //Przypisywanie aktualnych klientów do zmiennej klientData
 setKlientData(data){
  this.klientData = data;
@@ -179,6 +194,11 @@ setPostData(data){
 //Przypisywanie aktualnych pojazdów do zmiennej postData
 setCarData(data){
  this.carData = data;
+}
+
+//Przypisywanie aktualnych produktów do zmiennej postData
+setProductData(data){
+ this.productData = data;
 }
 
 // Pobieranie aktualnych klientów z bazy danych, oraz przypisywanie ich do odpowiedniej zmiennej
@@ -330,6 +350,36 @@ getCarsFromDb(){
   });
 }
 
+//Pobieranie aktualnych produktów z bazy danych, oraz przypisanie ich do odpowiedniej zmiennej
+getProductsFromDb(){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database();
+
+  var ref =  database.ref('/users/'+user.uid+'/products');
+ 
+  this.products = [];
+  this.$productLists = [];
+
+  ref.on('value', (snapshot)=>{
+      this.$productLists = snapshot.val();
+
+     if(this.$productLists != null || this.$productLists != undefined){
+        for(let id of Object.keys(this.$productLists)){
+        if(this.productData == ""){
+          this.products.push(this.$productLists[id]);
+        }
+        else if(this.productData != ""){
+          if(this.$productLists[id].name.lastIndexOf(this.productData) != -1){
+          this.products.push(this.$productLists[id]);
+          }
+        }
+      }
+    }
+     this.productStream.next(this.products);
+  });
+}
+
 //Tworzenie obiektu do obserwowania klientów na zmianny w innych komponentach
 subscribeToGetKleints(){
   return Observable.from(this.klientStream);
@@ -359,6 +409,11 @@ subscribeToGetCars(){
   return Observable.from(this.carStream);
 }
 
+//Tworzenie obiektu do obserwowania produktów na zmianny w innych komponentach
+subscribeToGetProducts(){
+  return Observable.from(this.productStream);
+}
+
 //Pobieranie aktualnych danych klienta potrzebnych do jego edycji
 getKlientToEdit(data){
   return this.klients[data];
@@ -382,6 +437,11 @@ getPostToEdit(data){
 //Pobieranie aktualnych danych pojazdów potrzebnych do edycji
 getCarToEdit(data){
   return this.cars[data];
+}
+
+//Pobieranie aktualnych danych pojazdów potrzebnych do edycji
+getProductToEdit(data){
+  return this.products[data];
 }
 
 //Edytowanie klienta w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
@@ -427,12 +487,22 @@ editPostsToDb(name, data){
 
 }
 
-//Edytowanie pjazdów w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
+//Edytowanie pojazdów w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
 editCarsToDb(name, data){
   var firebase = require("firebase");
   var user:any = firebase.auth().currentUser;
   var database = firebase.database(); 
   var ref =  database.ref('/users/'+user.uid+'/cars/'+Object.keys(this.$carLists)[name]);
+  ref.update(data);
+  this.getCarsFromDb();
+}
+
+//Edytowanie produktów w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
+editProductsToDb(name, data){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/products/'+Object.keys(this.$productLists)[name]);
   ref.update(data);
   this.getCarsFromDb();
 }
@@ -490,6 +560,16 @@ deleteCarFromDB(name){
   this.getCarsFromDb();
 }
 
+//Usuwanie pojazdów z bazy danych
+deleteProductFromDB(name){
+  var firebase = require("firebase");
+  var user:any = firebase.auth().currentUser;
+  var database = firebase.database(); 
+  var ref =  database.ref('/users/'+user.uid+'/products/'+Object.keys(this.$productLists)[name]);
+  ref.remove();
+  this.getProductsFromDb();
+}
+
 //Pobieranie pliku z korespondencji
 downloadPostFromDB(name){
   var mainThis = this;
@@ -529,6 +609,7 @@ downloadPostFromDB(name){
       this.workerData = "";
       this.postData = "";
       this.carData = "";
+      this.productData = "";
     }
     else{
       this.userInfo = '';

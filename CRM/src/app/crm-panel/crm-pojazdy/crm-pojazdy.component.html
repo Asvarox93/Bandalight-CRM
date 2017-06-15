@@ -19,7 +19,8 @@
       <th>Model</th>
       <th>Data zakupu</th>
       <th>Data przeglądu</th>  
-      <th>Data ubezpieczenia</th>                
+      <th>Data ubezpieczenia</th>
+      <th>Kilometry</th>             
     </tr>
   </thead>
   <tbody>
@@ -30,6 +31,7 @@
       <td>{{car.zData}}</td>
       <td>{{car.pData}}</td>
       <td>{{car.uData}}</td>
+      <td>{{car.kData}}</td>      
       <td class="btn-info clear" (click)="showEditConfirm(i)">Edytuj</td>
       <td class="btn-danger clear" (click)="deleteCar(i)">Usuń</td>
     </tr>

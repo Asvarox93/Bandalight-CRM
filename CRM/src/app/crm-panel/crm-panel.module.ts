@@ -26,6 +26,11 @@ import { CrmKorespondencjaEdytujComponent } from './crm-korespondecja/crm-koresp
 import { CrmPojazdyComponent } from './crm-pojazdy/crm-pojazdy.component';
 import { CrmPojazdyDodajComponent } from './crm-pojazdy/crm-pojazdy-dodaj.component';
 import { CrmPojazdyEdytujComponent } from './crm-pojazdy/crm-pojazdy-edytuj.component';
+import { CrmProduktyComponent } from './crm-produkty/crm-produkty.component';
+import { CrmProduktyDodajComponent } from './crm-produkty/crm-produkty-dodaj.component';
+import { CrmProduktyEdytujComponent } from './crm-produkty/crm-produkty-edytuj.component';
+
+
 
 export const config = {
     apiKey: "AIzaSyBxYKlNybswUychAoL7IDtLnrnyGdDovl4",
@@ -70,7 +75,10 @@ export const myFirebaseAuthConfig = {
       CrmKorespondencjaEdytujComponent,
       CrmPojazdyComponent,
       CrmPojazdyDodajComponent,
-      CrmPojazdyEdytujComponent
+      CrmPojazdyEdytujComponent,
+      CrmProduktyComponent,
+      CrmProduktyDodajComponent,
+      CrmProduktyEdytujComponent
       ],
   entryComponents:[
     CrmKlienciDodajComponent,
@@ -82,7 +90,9 @@ export const myFirebaseAuthConfig = {
     CrmKorespondencjaDodajComponent,
     CrmKorespondencjaEdytujComponent,
     CrmPojazdyDodajComponent,
-    CrmPojazdyEdytujComponent
+    CrmPojazdyEdytujComponent,
+    CrmProduktyDodajComponent,
+    CrmProduktyEdytujComponent
   ],
   exports:[
     PanelKlientaLogowanieComponent

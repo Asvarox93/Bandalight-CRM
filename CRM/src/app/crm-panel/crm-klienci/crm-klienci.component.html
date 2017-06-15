@@ -18,7 +18,8 @@
       <th>Nazwa Klienta</th>
       <th>Ulica</th>
       <th>Kod pocztowy</th>
-      <th>Miasto</th>      
+      <th>Miasto</th>
+      <th>Notatki</th>        
     </tr>
   </thead>
   <tbody>
@@ -28,6 +29,7 @@
       <td>{{klient.ulica}}</td>
       <td>{{klient.kodPocztowy}}</td>
       <td>{{klient.miasto}}</td>
+      <td>{{klient.notatki}}</td>
       <td class="btn-info clear" (click)="showDeleteConfirm(i)">Edytuj</td>
       <td class="btn-danger clear" (click)="deleteKlient(i)">Usuń</td>
     </tr>

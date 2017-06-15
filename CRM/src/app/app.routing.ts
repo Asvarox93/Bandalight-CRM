@@ -12,6 +12,7 @@ import { CrmZleceniaComponent } from './crm-panel/crm-zlecenia/crm-zlecenia.comp
 import { CrmPracownicyComponent } from './crm-panel/crm-pracownicy/crm-pracownicy.component';
 import { CrmKorespondecjaComponent } from './crm-panel/crm-korespondecja/crm-korespondecja.component';
 import { CrmPojazdyComponent } from './crm-panel/crm-pojazdy/crm-pojazdy.component';
+import { CrmProduktyComponent } from './crm-panel/crm-produkty/crm-produkty.component';
 
 
 const routesConfig: Routes = [
@@ -28,7 +29,9 @@ const routesConfig: Routes = [
         {path: 'zlecenia', component: CrmZleceniaComponent},
         {path: 'pracownicy', component: CrmPracownicyComponent},
         {path: 'korespondencja', component: CrmKorespondecjaComponent},
-        {path: 'pojazdy', component: CrmPojazdyComponent}
+        {path: 'pojazdy', component: CrmPojazdyComponent},
+        {path: 'produkty', component: CrmProduktyComponent}
+        
         
         
       ]},      

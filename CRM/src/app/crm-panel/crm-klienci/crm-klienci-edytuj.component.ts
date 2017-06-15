@@ -61,6 +61,17 @@ export interface ConfirmModel {
 								</div>
 							</div>
 						</div>
+
+							<div class="form-group">
+							<label for="notatki" class="cols-sm-2 control-label">Notatki</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></span>
+									<textarea [(ngModel)]="klienci.notatki" class="form-control" name="notatki" id="notatki" required placeholder="Wprowadz własne notatki"></textarea>
+								</div>
+							</div>
+						</div>
+
 					</form>
 				</div>
 			</div>

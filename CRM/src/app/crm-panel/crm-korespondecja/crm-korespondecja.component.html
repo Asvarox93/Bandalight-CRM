@@ -16,7 +16,8 @@
     <tr>
       <th>#</th>
       <th>Nazwa dokumentu</th>
-      <th>Dotyczy</th>   
+      <th>Dotyczy klienta</th>
+      <th>Dotyczy tematu</th>   
       <th>Data dodania</th>
     </tr>
   </thead>
@@ -24,6 +25,7 @@
     <tr *ngFor="let post of posts; let i = index">
       <th scope="row">{{i}}</th>
       <td>{{post.nazwa}}</td>
+      <td>{{post.client}}</td>
       <td>{{post.dotyczy}}</td>
       <td>{{post.data}}</td>
       <td class="btn-success clear" (click)="downloadFile(i)">Pobierz</td>

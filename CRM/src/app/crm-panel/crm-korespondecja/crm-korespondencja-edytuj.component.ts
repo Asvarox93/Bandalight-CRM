@@ -32,6 +32,19 @@ export interface ConfirmModel {
 							</div>
 						</div>
 
+							<div class="form-group">
+							<label for="nazwa" class="cols-sm-2 control-label">Dotyczy Klienta</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-building fa-lg" aria-hidden="true"></i></span>
+									<select class="form-control" required [(ngModel)]="Posts.client" name="klient" id="klient"> <!-- <== changed -->
+                    <option value="" selected="selected" disabled>Wybierz Klienta</option>
+                    <option *ngFor="let klient of klients"  [ngValue]="klient.nazwa">{{ klient.nazwa }}</option>
+                  </select>
+								</div>
+							</div>
+						</div>
+
 						<div class="form-group">
 							<label for="dotyczy" class="cols-sm-2 control-label">Dotyczy</label>
 							<div class="cols-sm-10">
@@ -86,6 +99,7 @@ export class CrmKorespondencjaEdytujComponent extends DialogComponent<ConfirmMod
   title:string;
 
   Posts;
+  klients;
 
  constructor(dialogService: DialogService, private crmService: CrmServiceService) { 
     super(dialogService);
@@ -98,6 +112,14 @@ export class CrmKorespondencjaEdytujComponent extends DialogComponent<ConfirmMod
   }
 
   ngOnInit() {
+	 this.crmService.subscribeToGetKleints().subscribe((klients)=>{
+   this.klients = klients;
+   });
     this.Posts = this.crmService.getPostToEdit(this.UserId);
   }
+	 ngAfterContentInit(){
+    if( this.klients == "" || this.klients == null || this.klients == undefined){
+    this.crmService.getKlientFromDb();
+    }
+   }
 }

@@ -43,7 +43,7 @@
       <div class="hr-line"></div>
       <p>Sporządzanie raportów</p>
     </div>
-    <div class="btn btn-lg btn-main-color mt-5 mb-4 mx-auto">ZOBACZ WIĘCEJ OPCJI</div>
+    <div class="btn btn-lg btn-main-color mt-5 mb-4 mx-auto" routerLink="/oferta">ZOBACZ WIĘCEJ OPCJI</div>
   </div>
   <hr>
   <div class='row'>
@@ -81,7 +81,7 @@
                   <div class="form-group">
                     <label for="name" class="contactNameBorder">
                                         <span>I</span>mie i <span>N</span>azwisko</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Wprowadz imie i naziwsko." required="required"
+                    <input type="text" class="form-control" id="name" [(ngModel)]='mail.name' name="name" placeholder="Wprowadz imie i naziwsko." required="required"
                     />
                   </div>
                   <div class="form-group">
@@ -90,24 +90,24 @@
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-envelope">@</span>
                       </span>
-                      <input type="email" class="form-control" id="email" name="email" placeholder="Wprowadz adres email" required="required" /></div>
+                      <input type="email" class="form-control" id="email" [(ngModel)]='mail.email' name="email" placeholder="Wprowadz adres email" required="required" /></div>
                   </div>
                   <div class="form-group">
                     <label for="subject" class="contactNameBorder">
                                         <span>T</span>emat</label>
-                    <input id="subject" name="subject" class="form-control" required="required" placeholder="Wprowadz temat rozmowy">
+                    <input id="subject" name="subject" class="form-control" [(ngModel)]='mail.topic' required="required" placeholder="Wprowadz temat rozmowy">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="message" class="contactNameBorder">
                                         <span>T</span>reść <span>W</span>iadomości</label>
-                    <textarea name="message" id="message" class="form-control" rows="10" cols="25" required="required" placeholder="Wiadomość która chcesz nam przekazać"></textarea>
+                    <textarea name="message" id="message" name="message" class="form-control" [(ngModel)]='mail.message' rows="10" cols="25" required="required" placeholder="Wiadomość która chcesz nam przekazać"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12 form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input text-small" type="checkbox" value="rulesAccept" required>
+                    <input class="form-check-input text-small" type="checkbox" name="checkbox" [(ngModel)]='mail.reules' value="rulesAccept" required>
                     <p class="text-muted small">- wyrażam zgodę na przetwarzanie moich danych osobowych przez Bandalight, zgodnie 
 z obowiązującym prawem i polityką prywatnośći.</p>
                   </label>
@@ -115,7 +115,7 @@ z obowiązującym prawem i polityką prywatnośći.</p>
                 </div>
                 <div class="row">
                 <div class=" mx-auto">
-                  <input type="submit" class="btn btn-lg btn-main-color" value="Wyślij">
+                  <input type="submit" class="btn btn-lg btn-main-color" (click)="sendEmail()" value="Wyślij">
                 </div>
               </div>
             </form>

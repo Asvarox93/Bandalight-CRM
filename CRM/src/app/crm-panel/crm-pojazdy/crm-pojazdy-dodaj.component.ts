@@ -72,6 +72,16 @@ export interface ConfirmModel {
 							</div>
 						</div>
 
+						<div class="form-group">
+							<label for="kData" class="cols-sm-2 control-label">Ilość aktualnie przejechanych kilometrów</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-shield  fa-lg" aria-hidden="true"></i></span>
+									<input type="number" [(ngModel)]="cars.kData" class="form-control dateParam" name="kData" id="kData" required placeholder="Wprowadz kilometry"/>
+								</div>
+							</div>
+						</div>
+
 					</form>
 				</div>
 			</div>
