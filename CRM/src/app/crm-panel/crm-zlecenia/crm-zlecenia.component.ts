@@ -15,6 +15,7 @@ export class CrmZleceniaComponent implements OnInit {
 
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+        this.crmService.getOrdersFromDb();
   }
  
   //Wyświetlenie formularza dodawania nowego zlecenia
@@ -55,7 +56,6 @@ export class CrmZleceniaComponent implements OnInit {
 //Usuwanie wyznaczonego zlecenia przez użytkownika
   deleteOrders(data){
     this.crmService.deleteOrersFromDB(data);
-    this.crmService.getOrdersFromDb();
   }
 
 //Wyszukiwanie zlecenia według podanej frazy
@@ -70,7 +70,6 @@ export class CrmZleceniaComponent implements OnInit {
 
 //Ładuje zlecenia po załadowaniu całego komponentu
   ngAfterContentChecked(){
-     this.crmService.getOrdersFromDb();
      //Subskrybuje sie na zmiany w bazie zleceń i aktualizuje je w momencie zmiany.
       this.crmService.subscribeToGetOrders().subscribe((orders)=>{
       this.orders = orders;

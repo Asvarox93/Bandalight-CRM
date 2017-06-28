@@ -63,6 +63,7 @@ import { Component, OnInit } from '@angular/core';
     </div>
 </div>
 
+<!--
 <div class="row mt-5">
    <div class="col-md-4">
     <div class="card" routerLink="./finanse">
@@ -89,9 +90,9 @@ import { Component, OnInit } from '@angular/core';
         <h6 class="card-subtitle mb-2 text-muted mt-3"> Zobacz swój zbiór informacji</h6>
       </div>
     </div>
-    </div>
-    
+    </div> 
 </div>
+-->
   `,
   styles: [`
 

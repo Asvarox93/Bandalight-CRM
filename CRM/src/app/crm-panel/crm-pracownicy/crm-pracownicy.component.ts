@@ -18,6 +18,7 @@ workers;
 WorkerSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+         this.crmService.getWorkersFromDb();
    }
 
 // Wyświetlanie formularza dodawania pracownika do bazy danych
@@ -68,7 +69,6 @@ WorkerSearch:string;
 //Wysyłanie danych pracownika do funkcji usuwającej klienta z bazy danych
   deleteWorker(data){
     this.crmService.deleteWorkerFromDB(data);
-    this.crmService.getWorkersFromDb();
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
@@ -78,7 +78,6 @@ WorkerSearch:string;
 
 //Wywołanie funckji po zainicjalizowaniu obiektów/funkcji
   ngAfterContentChecked(){
-     this.crmService.getWorkersFromDb();
      this.crmService.subscribeToGetWorkers().subscribe((workers)=>{
       this.workers = workers;
     }); 

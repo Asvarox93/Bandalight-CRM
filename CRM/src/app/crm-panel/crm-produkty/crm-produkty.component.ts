@@ -18,6 +18,7 @@ products;
 ProductSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+         this.crmService.getProductsFromDb();
    }
 
 // Wyświetlanie formularza dodawania pracownika do bazy danych
@@ -68,7 +69,6 @@ ProductSearch:string;
 //Wysyłanie danych produktu do funkcji usuwającej produkt z bazy danych
   deleteProduct(data){
     this.crmService.deleteProductFromDB(data);
-    this.crmService.getProductsFromDb();
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
@@ -78,7 +78,6 @@ ProductSearch:string;
 
 //Wywołanie funckji po zainicjalizowaniu obiektów/funkcji
   ngAfterContentChecked(){
-     this.crmService.getProductsFromDb();
      this.crmService.subscribeToGetProducts().subscribe((product)=>{
       this.products = product;
     }); 

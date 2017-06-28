@@ -18,6 +18,7 @@ posts;
 postsSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+         this.crmService.getPostsFromDb();
    }
 
 // Wyświetlanie formularza dodawania pracownika do bazy danych
@@ -68,7 +69,6 @@ postsSearch:string;
 //Wysyłanie danych korespondecji do funkcji usuwającej dana korespondecje z bazy danych
   deletePost(data){
     this.crmService.deletePostFromDB(data);
-    this.crmService.getPostsFromDb();
   }
 
 //Wysyła informacje o wybranej korespondencji do funkcji zajmującej się pobieraniem pliku korespondencji z serwera.
@@ -83,7 +83,6 @@ postsSearch:string;
 
 //Wywołanie funckji po zainicjalizowaniu obiektów/funkcji
   ngAfterContentChecked(){
-     this.crmService.getPostsFromDb();
      this.crmService.subscribeToGetPosts().subscribe((posts)=>{
       this.posts = posts;
     }); 

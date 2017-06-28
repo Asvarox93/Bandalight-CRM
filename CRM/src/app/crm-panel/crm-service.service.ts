@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import 'rxjs/add/observable/fromPromise';
 import {AngularFire, AuthProviders, AuthMethods} from 'angularfire2';
+import { Router } from '@angular/router';
+
 
 export interface User{
   login:string;
@@ -86,6 +88,7 @@ loginUser (user:User){
   let res: Promise<boolean> = new Promise((resolve, reject) =>{
     this.af.auth.login({email: user.login, password: user.haslo}).then(result =>{ 
       resolve(result);
+       this.router.navigateByUrl("/panel-glowny");
     }).catch((event) => {
       resolve(event.message);
     })
@@ -207,27 +210,30 @@ getKlientFromDb(){
   var user:any = firebase.auth().currentUser;
   var database = firebase.database();
 
-  var ref =  database.ref('/users/'+user.uid+'/clients');
- 
+  var ref =  database.ref('/users/'+user.uid+'/clients')
+
   this.klients = [];
   this.$klientLists = [];
+  var test;
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$klientLists = snapshot.val();
-
-      if(this.$klientLists != null || this.$klientLists != undefined){
-        for(let id of Object.keys(this.$klientLists)){
-        if(this.klientData == ""){
-          this.klients.push(this.$klientLists[id]);
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$klientLists = snapshot.val();
+      if(pointer.$klientLists != null || pointer.$klientLists != undefined){
+        for(let id of Object.keys(pointer.$klientLists)){
+        if(pointer.klientData == "" || pointer.klientData == null || pointer.klientData == undefined){
+          pointer.klients.push(pointer.$klientLists[id]);
         }
-        else if(this.klientData != ""){
-          if(this.$klientLists[id].nazwa.lastIndexOf(this.klientData) != -1){
-          this.klients.push(this.$klientLists[id]);
+        else if(pointer.klientData != ""){
+          if(pointer.$klientLists[id].nazwa.lastIndexOf(pointer.klientData) != -1){
+          pointer.klients.push(pointer.$klientLists[id]);
           }
         }
       }
+      pointer.klientStream.next(pointer.klients);
     }
-     this.klientStream.next(this.klients);
+
   });
 }
 
@@ -241,23 +247,25 @@ getOrdersFromDb(){
  
   this.orders = [];
   this.$orderLists = [];
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$orderLists = snapshot.val();
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$orderLists = snapshot.val();
 
-     if(this.$orderLists != null || this.$orderLists != undefined){
-        for(let id of Object.keys(this.$orderLists)){
-        if(this.orderData == ""){
-          this.orders.push(this.$orderLists[id]);
+     if(pointer.$orderLists != null || pointer.$orderLists != undefined){
+        for(let id of Object.keys(pointer.$orderLists)){
+        if(pointer.orderData == "" || pointer.orderData == null || pointer.orderData == undefined){
+          pointer.orders.push(pointer.$orderLists[id]);
         }
-        else if(this.orderData != ""){
-          if(this.$orderLists[id].nazwa.lastIndexOf(this.orderData) != -1){
-          this.orders.push(this.$orderLists[id]);
+        else if(pointer.orderData != ""){
+          if(pointer.$orderLists[id].nazwa.lastIndexOf(pointer.orderData) != -1){
+          pointer.orders.push(pointer.$orderLists[id]);
           }
         }
       }
     }
-     this.orderStream.next(this.orders);
+     pointer.orderStream.next(pointer.orders);
   });
 }
 
@@ -271,23 +279,25 @@ getWorkersFromDb(){
  
   this.workers = [];
   this.$workerLists = [];
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$workerLists = snapshot.val();
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$workerLists = snapshot.val();
 
-     if(this.$workerLists != null || this.$workerLists != undefined){
-        for(let id of Object.keys(this.$workerLists)){
-        if(this.workerData == ""){
-          this.workers.push(this.$workerLists[id]);
+     if(pointer.$workerLists != null || pointer.$workerLists != undefined){
+        for(let id of Object.keys(pointer.$workerLists)){
+        if(pointer.workerData == "" || pointer.workerData == null || pointer.workerData == undefined){
+          pointer.workers.push(pointer.$workerLists[id]);
         }
-        else if(this.workerData != ""){
-          if(this.$workerLists[id].nazwisko.lastIndexOf(this.workerData) != -1){
-          this.workers.push(this.$workerLists[id]);
+        else if(pointer.workerData != ""){
+          if(pointer.$workerLists[id].nazwisko.lastIndexOf(pointer.workerData) != -1){
+          pointer.workers.push(pointer.$workerLists[id]);
           }
         }
       }
     }
-     this.workerStream.next(this.workers);
+     pointer.workerStream.next(pointer.workers);
   });
 }
 //Pobieranie aktualnyej korespondencji z bazy danych, oraz przypisanie ich do odpowiedniej zmiennej
@@ -300,23 +310,25 @@ getPostsFromDb(){
  
   this.posts = [];
   this.$postLists = [];
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$postLists = snapshot.val();
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$postLists = snapshot.val();
 
-     if(this.$postLists != null || this.$postLists != undefined){
-        for(let id of Object.keys(this.$postLists)){
-        if(this.postData == ""){
-          this.posts.push(this.$postLists[id]);
+     if(pointer.$postLists != null || pointer.$postLists != undefined){
+        for(let id of Object.keys(pointer.$postLists)){
+        if(pointer.postData == "" || pointer.postData == null || pointer.postData == undefined){
+          pointer.posts.push(pointer.$postLists[id]);
         }
-        else if(this.postData != ""){
-          if(this.$postLists[id].nazwa.lastIndexOf(this.postData) != -1){
-          this.posts.push(this.$workerLists[id]);
+        else if(pointer.postData != ""){
+          if(pointer.$postLists[id].nazwa.lastIndexOf(pointer.postData) != -1){
+          pointer.posts.push(pointer.$workerLists[id]);
           }
         }
       }
     }
-     this.postStream.next(this.posts);
+     pointer.postStream.next(pointer.posts);
   });
 }
 
@@ -330,23 +342,25 @@ getCarsFromDb(){
  
   this.cars = [];
   this.$carLists = [];
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$carLists = snapshot.val();
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$carLists = snapshot.val();
 
-     if(this.$carLists != null || this.$carLists != undefined){
-        for(let id of Object.keys(this.$carLists)){
-        if(this.carData == ""){
-          this.cars.push(this.$carLists[id]);
+     if(pointer.$carLists != null || pointer.$carLists != undefined){
+        for(let id of Object.keys(pointer.$carLists)){
+        if(pointer.carData == "" || pointer.carData == null || pointer.carData == undefined){
+          pointer.cars.push(pointer.$carLists[id]);
         }
-        else if(this.carData != ""){
-          if(this.$carLists[id].marka.lastIndexOf(this.carData) != -1){
-          this.cars.push(this.$carLists[id]);
+        else if(pointer.carData != ""){
+          if(pointer.$carLists[id].marka.lastIndexOf(pointer.carData) != -1){
+          pointer.cars.push(pointer.$carLists[id]);
           }
         }
       }
     }
-     this.carStream.next(this.cars);
+     pointer.carStream.next(pointer.cars);
   });
 }
 
@@ -360,23 +374,25 @@ getProductsFromDb(){
  
   this.products = [];
   this.$productLists = [];
+  var pointer = this;
 
-  ref.on('value', (snapshot)=>{
-      this.$productLists = snapshot.val();
+  ref.once("value")
+  .then(function(snapshot){
+      pointer.$productLists = snapshot.val();
 
-     if(this.$productLists != null || this.$productLists != undefined){
-        for(let id of Object.keys(this.$productLists)){
-        if(this.productData == ""){
-          this.products.push(this.$productLists[id]);
+     if(pointer.$productLists != null || pointer.$productLists != undefined){
+        for(let id of Object.keys(pointer.$productLists)){
+        if(pointer.productData == "" || pointer.productData == null || pointer.productData == undefined){
+          pointer.products.push(pointer.$productLists[id]);
         }
-        else if(this.productData != ""){
-          if(this.$productLists[id].name.lastIndexOf(this.productData) != -1){
-          this.products.push(this.$productLists[id]);
+        else if(pointer.productData != ""){
+          if(pointer.$productLists[id].name.lastIndexOf(pointer.productData) != -1){
+          pointer.products.push(pointer.$productLists[id]);
           }
         }
       }
     }
-     this.productStream.next(this.products);
+     pointer.productStream.next(pointer.products);
   });
 }
 
@@ -601,7 +617,7 @@ downloadPostFromDB(name){
 
 
  
-  constructor(private af:AngularFire) { 
+  constructor(private af:AngularFire,  private router: Router) { 
     if(sessionStorage.getItem('currentUser')){
       this.userInfo = JSON.parse(sessionStorage.getItem('currentUser'));
       this.klientData = "";

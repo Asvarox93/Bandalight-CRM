@@ -25,7 +25,6 @@ formSubmit(){
         this.validationError = data;
         if(this.validationError.provider === 4){
           this.CrmService.setUserInfo(this.validationError);
-          this.router.navigateByUrl("/panel-glowny");
         }
       });
 }

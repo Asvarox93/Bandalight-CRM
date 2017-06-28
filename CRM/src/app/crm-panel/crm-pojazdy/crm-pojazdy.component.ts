@@ -17,6 +17,7 @@ cars;
 CarSearch:string;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+         this.crmService.getCarsFromDb();
    }
 
 // Wyświetlanie formularza dodawania pojazdu do bazy danych
@@ -67,7 +68,6 @@ CarSearch:string;
 //Wysyłanie danych pojazdu do funkcji usuwającej klienta z bazy danych
   deleteCar(data){
     this.crmService.deleteCarFromDB(data);
-    this.crmService.getCarsFromDb();
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
@@ -77,7 +77,6 @@ CarSearch:string;
 
 //Wywołanie funckji po zainicjalizowaniu obiektów/funkcji
   ngAfterContentChecked(){
-     this.crmService.getCarsFromDb();
      this.crmService.subscribeToGetCars().subscribe((cars)=>{
       this.cars = cars;
     }); 

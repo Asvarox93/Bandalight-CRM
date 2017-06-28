@@ -17,7 +17,9 @@ export class CrmKlienciComponent implements OnInit {
 klienci;
 KlientSearch:string;
 
+
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
+        this.crmService.getKlientFromDb();
   }
 
 // Wyświetlanie formularza dodawania klienta do bazy danych
@@ -68,7 +70,6 @@ KlientSearch:string;
 //Wysyłanie danych klienta do funkcji usuwającej klienta z bazy danych
   deleteKlient(data){
     this.crmService.deleteKleintFromDB(data);
-    this.crmService.getKlientFromDb();
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
@@ -76,9 +77,11 @@ KlientSearch:string;
 
   }
   ngAfterContentChecked(){
-     this.crmService.getKlientFromDb();
      this.crmService.subscribeToGetKleints().subscribe((klients)=>{
-      this.klienci = klients;
+      if(this.klienci != klients){
+        this.klienci = klients;
+        console.log("klienci", this.klienci);
+      }
     }); 
    }
 
