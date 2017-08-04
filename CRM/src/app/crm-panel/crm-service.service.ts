@@ -53,6 +53,10 @@ $productLists;
 productStream = new Subject();
 productData;
 
+//Zmienne rejestracji
+regStatus;
+onValidReg = new Subject();
+
 
 //Przypisywanie informacji o użytkowaniu do zmiennej userInfo, oraz przchowywanie ich w sesji przeglądarki
 setUserInfo(info){
@@ -61,44 +65,64 @@ setUserInfo(info){
 }
 //Funkcja odpowiadająca za rejestrację użytkowanika, wraz z dodaniem wszelkich informacji o użytkowniku do bazy danych
 registerUser(user: User) {
-  let res: Promise<boolean> = new Promise((resolve, reject) =>{
-  this.af.auth.createUser({
-        email: user.login,
-        password: user.haslo,
-      }).then(
-        (success) => {
-           var firebase = require("firebase");
-           let user:any = firebase.auth().currentUser;
-           resolve(success);
-           user.sendEmailVerification().then(
-             (success) => {resolve("Zweryfikuj swój adres email!");} 
-           ).catch(
-             (err) => {
-               console.log("email", err);
-               resolve(err);
-             }
-           )
+let res: Promise<boolean> = new Promise((resolve, reject) =>{
+var firebase = require("firebase");
+firebase.auth().createUserWithEmailAndPassword(user.login, user.haslo).catch(function(error) {
 
-  })
- })
- return res;
+  var errorMessage;
+  var errorCode = error.code;
+  if (errorCode === 'auth/wrong-password') {
+    errorMessage = ('Hasło nie poprawne!');
+  } else if (errorCode === 'auth/invalid-email') {
+    errorMessage = ('Adres e-mail nie poprawny!');
+  } else if (errorCode === 'auth/weak-password') {
+    errorMessage = ('Hasło jest zbyt słabe! ');
+  } else if (errorCode === 'auth/user-disabled'|| errorCode ==='auth/email-already-in-use') {
+    errorMessage = ('Ten adres e-mail nie może zostać użyty!');
+  } else {
+    errorMessage = error.message;
+  }
+  return errorMessage;
+  
+}).then(result =>{
+  resolve(result);
+});
+});
+return res;
 }
 //Funkcja sprawdzająca czy danych użytkownik istnieje po podaniu loginu i hasła potrzebnych do uwierzytelnienia.
 loginUser (user:User){
   let res: Promise<boolean> = new Promise((resolve, reject) =>{
-    this.af.auth.login({email: user.login, password: user.haslo}).then(result =>{ 
-      resolve(result);
-       this.router.navigateByUrl("/panel-glowny");
-    }).catch((event) => {
-      resolve(event.message);
-    })
-   });
+var firebase = require("firebase");
+firebase.auth().signInWithEmailAndPassword(user.login, user.haslo).catch(function(error) {
 
-  return res;
+  var errorMessage;
+  var errorCode = error.code;
+  if (errorCode === 'auth/wrong-password') {
+    errorMessage = ('Hasło nie poprawne!');
+  } else if (errorCode === 'auth/invalid-email') {
+    errorMessage = ('Adres e-mail nie poprawny!');
+  } else if (errorCode === 'auth/user-disabled'|| errorCode ==='auth/email-already-in-use') {
+    errorMessage = ('Ten adres e-mail nie może zostać użyty!');
+  } else {
+    errorMessage = "Coś poszło nie tak! Spróbuj ponownie";
+  }
+  return errorMessage;
+  
+}).then(result =>{
+  resolve(result);
+});
+});
+return res;
 }
 //Wylogowanie użytkownia, oraz usunięcie aktualnych danych użytkownika z pamięci.
 logoutUser(){
-  this.af.auth.logout();
+  var firebase = require("firebase");
+  firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  }).catch(function(error) {
+  alert("Coś poszło nie tak!");
+});
   this.setUserInfo("");
 }
 //Wysyłanie danych klienta do bazy danych
@@ -204,6 +228,11 @@ setProductData(data){
  this.productData = data;
 }
 
+//Przypisanie aktualnego statusu rejestracji
+setRegStatus(data){
+ this.regStatus = data;
+}
+
 // Pobieranie aktualnych klientów z bazy danych, oraz przypisywanie ich do odpowiedniej zmiennej
 getKlientFromDb(){
   var firebase = require("firebase");
@@ -214,7 +243,6 @@ getKlientFromDb(){
 
   this.klients = [];
   this.$klientLists = [];
-  var test;
   var pointer = this;
 
   ref.once("value")
@@ -231,10 +259,10 @@ getKlientFromDb(){
           }
         }
       }
-      pointer.klientStream.next(pointer.klients);
     }
-
+    pointer.klientStream.next(pointer.klients); 
   });
+
 }
 
 //Pobieranie aktualnych zleceń z bazy danych, oraz przypisanie ich do odpowiedniej zmiennej
@@ -430,6 +458,11 @@ subscribeToGetProducts(){
   return Observable.from(this.productStream);
 }
 
+//Tworzenie obiektu do obserwowania produktów na zmianny w innych komponentach
+subscribeToGetRegStatus(){
+  return Observable.from(this.regStatus);
+}
+
 //Pobieranie aktualnych danych klienta potrzebnych do jego edycji
 getKlientToEdit(data){
   return this.klients[data];
@@ -459,6 +492,7 @@ getCarToEdit(data){
 getProductToEdit(data){
   return this.products[data];
 }
+
 
 //Edytowanie klienta w bazie danych po zatwierdzeniu modyfikacji przez użytkownika
 EditKleintToDb(name, data){
@@ -626,10 +660,12 @@ downloadPostFromDB(name){
       this.postData = "";
       this.carData = "";
       this.productData = "";
+      
     }
     else{
       this.userInfo = '';
     }
+    this.regStatus = "";
   }
 
 }

@@ -69,6 +69,7 @@ WorkerSearch:string;
 //Wysyłanie danych pracownika do funkcji usuwającej klienta z bazy danych
   deleteWorker(data){
     this.crmService.deleteWorkerFromDB(data);
+    
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu

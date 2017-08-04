@@ -20,7 +20,7 @@ export class CrmPanelHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.login =  this.crmService.userInfo.auth.email;
+   this.login =  this.crmService.userInfo.email;
   }
 
 }

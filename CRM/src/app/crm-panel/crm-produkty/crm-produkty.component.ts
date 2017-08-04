@@ -69,6 +69,7 @@ ProductSearch:string;
 //Wysyłanie danych produktu do funkcji usuwającej produkt z bazy danych
   deleteProduct(data){
     this.crmService.deleteProductFromDB(data);
+    
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu

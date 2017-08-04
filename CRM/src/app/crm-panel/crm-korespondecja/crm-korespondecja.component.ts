@@ -69,6 +69,7 @@ postsSearch:string;
 //Wysyłanie danych korespondecji do funkcji usuwającej dana korespondecje z bazy danych
   deletePost(data){
     this.crmService.deletePostFromDB(data);
+    
   }
 
 //Wysyła informacje o wybranej korespondencji do funkcji zajmującej się pobieraniem pliku korespondencji z serwera.

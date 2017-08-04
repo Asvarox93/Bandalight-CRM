@@ -56,6 +56,7 @@ export class CrmZleceniaComponent implements OnInit {
 //Usuwanie wyznaczonego zlecenia przez użytkownika
   deleteOrders(data){
     this.crmService.deleteOrersFromDB(data);
+    
   }
 
 //Wyszukiwanie zlecenia według podanej frazy

@@ -70,6 +70,7 @@ KlientSearch:string;
 //Wysyłanie danych klienta do funkcji usuwającej klienta z bazy danych
   deleteKlient(data){
     this.crmService.deleteKleintFromDB(data);
+    
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu
@@ -77,11 +78,8 @@ KlientSearch:string;
 
   }
   ngAfterContentChecked(){
-     this.crmService.subscribeToGetKleints().subscribe((klients)=>{
-      if(this.klienci != klients){
-        this.klienci = klients;
-        console.log("klienci", this.klienci);
-      }
+     this.crmService.subscribeToGetKleints().subscribe((klienci)=>{
+        this.klienci = klienci;
     }); 
    }
 

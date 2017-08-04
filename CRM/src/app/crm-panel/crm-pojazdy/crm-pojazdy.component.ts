@@ -68,6 +68,7 @@ CarSearch:string;
 //Wysyłanie danych pojazdu do funkcji usuwającej klienta z bazy danych
   deleteCar(data){
     this.crmService.deleteCarFromDB(data);
+    
   }
 
 //Inicjalizacja obiektów/funkcji w momencie całkowitego załadowania komponentu

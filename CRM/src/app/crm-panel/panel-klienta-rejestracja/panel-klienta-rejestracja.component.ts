@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { CrmServiceService, User } from '../crm-service.service';
 import { Router } from '@angular/router';
 
@@ -14,21 +14,24 @@ export class PanelKlientaRejestracjaComponent implements OnInit {
   haslo: ""
 };
 
+
 validationError;
 
 formSubmit(){
-   let result = this.CrmService.registerUser(this.data);
-   if(result){
-     result.then(data => {
-        this.validationError = data;
-      });
-   }
-   this.router.navigateByUrl("/panel-klienta");
+   this.CrmService.registerUser(this.data).then(result =>{
+    this.validationError = result;
+    console.log(this.validationError);
+    if(this.validationError.uid != null || this.validationError.uid != undefined){
+        this.CrmService.setRegStatus(this.validationError.email);
+        this.router.navigateByUrl("/panel-klienta");
+    }
+  })
 }
 
-  constructor(private CrmService: CrmServiceService, private router: Router) { }
+  constructor(private CrmService: CrmServiceService, private router: Router) {
+  }
 
   ngOnInit() {
   }
-
+  
 }

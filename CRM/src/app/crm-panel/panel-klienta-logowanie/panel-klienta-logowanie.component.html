@@ -1,6 +1,9 @@
 
 <div class="container center" *ngIf='data.status == false' [ngClass] = "{'invisible': loginValid == true}" >
       <form class="form-signin text-center " (ngSubmit)="formSubmit()">
+        <span class="text-success small align-middle" *ngIf='regSuccess'>
+            {{regSuccess}}
+         </span>
         <h2 class="form-signin-heading"><span>Logowanie</span></h2>
         <span class="text-danger small align-middle" *ngIf='validationError'>
             {{validationError}}
