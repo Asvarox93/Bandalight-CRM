@@ -36,9 +36,7 @@ import { Component, OnInit } from '@angular/core';
       background-size: cover;
       background-repeat: no-repeat;
     }
-    .navbar{
-      padding-top:50px;
-    }
+    
     img{
       margin-bottom: 20px;
     }
@@ -55,6 +53,15 @@ import { Component, OnInit } from '@angular/core';
     ul li a:hover{
       color:#ff8213;
     }
+    .row{
+      margin-right:0;
+    }
+
+    @media (min-width: 991px) {
+   .navbar{
+      padding-top:50px;
+    }
+}
 
   `]
 })

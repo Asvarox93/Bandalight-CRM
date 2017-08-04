@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
           <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isCollapsed = !isCollapsed"
                   [attr.aria-expanded]="!isCollapsed" data-toggle="collapse"
                   aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
           </button>
 
           <div 	[ngbCollapse]="!isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -107,7 +107,25 @@ import { Component, OnInit } from '@angular/core';
   ul li a:hover{
     color:#ff8213;
   }
-     
+  .navbar-toggler-right{
+    position:absolute;
+    top:10px;
+    right:-50px;
+    
+  }
+
+  /* background */
+  .navbar .navbar-toggler {
+  z-index:100000;
+  border-color: #ff8213;
+  background-color: #f28c32;
+  }
+  .navbar .navbar-toggler:hover{
+    cursor:pointer;
+  }
+ 
+  
+
     
   `]
 })
