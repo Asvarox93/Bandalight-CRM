@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
   </div>
   <div class="row">
   <div class="col-sm-12 text-center ">
-  <img class="img-fluid" src="../../../assets/footer/flogo.png">
+  <img class="img-fluid" src="./assets/footer/flogo.png">
   </div>
   <div class="col-sm-12">
   <p class="text-center">Darmowy CRM Online &#9400; Bandalight Sp. z o.o. <br> wszelkie prawa zastrzeżone. </p>
@@ -32,7 +32,7 @@ import { Component, OnInit } from '@angular/core';
       color: #fff;
       height: 300px;
       font-size:0.55em;
-      background-image: url("../../../assets/footer/fbackground.jpg");
+      background-image: url("./assets/footer/fbackground.jpg");
       background-size: cover;
       background-repeat: no-repeat;
     }

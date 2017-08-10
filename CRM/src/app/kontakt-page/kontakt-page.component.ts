@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapTypeStyle } from 'angular2-google-maps/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { MainPageServiceService, IMessage } from '../main-page/mainPageService.service';
 
 @Component({
   selector: 'sbc-kontakt-page',
@@ -120,7 +121,27 @@ export class KontaktPageComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  mail: IMessage = {};
+  mailStatus = "";
+  mailConfirm;
+
+  constructor(private mainService:MainPageServiceService) { }
+
+  sendEmail(message: IMessage) {
+   if(message !== undefined && message !== null){
+    this.mainService.sendEmail(message).subscribe(res => {
+      this.mailStatus = 'Wiadomość została pomyślnie wysłana!';
+      this.mailConfirm = true;
+    }, error => {
+      this.mailStatus = 'Wiadomość nie została pomyślnie wysłana!';
+      this.mailConfirm = false;
+    })
+   }
+  }
+
+  isSended(){
+  return this.mailConfirm === true;
+}
 
   ngOnInit() {
   }

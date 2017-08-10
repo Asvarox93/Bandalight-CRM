@@ -36,7 +36,7 @@ import { Component, OnInit } from '@angular/core';
           </div>
         </nav>
 
-          <img class="img-fluid mx-auto d-block" src="../../../assets/header/bandalight.png" alt="Brand Logo">
+          <img class="img-fluid mx-auto d-block" src="./assets/header/bandalight.png" alt="Brand Logo">
           <p class="lead text-center">
             <a class="btn btn-primary btn-lg btn-hover" routerLink="/rejestracja" role="button">ZAŁÓŻ DARMOWE KONTO</a>
           </p>
@@ -81,7 +81,7 @@ import { Component, OnInit } from '@angular/core';
   }
   .jumbotron{
     min-height:600px;
-    background-image: url("../../../assets/header/hbackground.jpg");
+    background-image: url("./assets/header/hbackground.jpg");
     background-size:cover;
       padding-top: 0;
       margin:0;

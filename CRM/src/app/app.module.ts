@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {routerModule} from './app.routing';
 import {CrmPanelModule} from './crm-panel/crm-panel.module';
