@@ -12,7 +12,8 @@ import { CrmZleceniaEdytujComponent } from '../crm-zlecenia/crm-zlecenia-edytuj.
 export class CrmZleceniaComponent implements OnInit {
   orders;
   OrderSearch;
-
+  modalText;
+  isDisplay;
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
         this.crmService.getOrdersFromDb();
@@ -24,15 +25,22 @@ export class CrmZleceniaComponent implements OnInit {
                 title:'Formularz dodawania zlecenia', 
                 message:''})
                 .subscribe((isConfirmed)=>{
-               
                     if(isConfirmed) {
-                        alert('Zlecenie zostało dodane do bazy danych');
+                        this.modalText = 'Zlecenie zostało dodane do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Zlecenie nie zostało dodane do bazy danych');
+                        this.modalText = 'Zlecenie nie zostało dodane do bazy danych';
+                        this.isDisplay = "block";
                     }
                 });
   }
+//Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
+  }
+
 //Wyśiwetla formularz edytowania klienta a następnie potwierdza wykonane zmiany komunikatem.
    showEditConfirm(data) {
             let disposable = this.dialogService.addDialog(CrmZleceniaEdytujComponent, {
@@ -42,10 +50,12 @@ export class CrmZleceniaComponent implements OnInit {
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane klienta zostały zmodyfikowane');
+                        this.modalText = 'Dane klienta zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane klienta nie zostały zmodyfikowane');
+                        this.modalText = 'Dane klienta nie zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();

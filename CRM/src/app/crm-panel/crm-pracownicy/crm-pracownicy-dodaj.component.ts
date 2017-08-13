@@ -21,6 +21,7 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Uzupełnij poniższe pola aby dodać pracownika</h5>
+					<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="imie" class="cols-sm-2 control-label">Imie</label>
@@ -74,12 +75,18 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: []
+	styles: [`
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
+	`]
 })
 export class CrmPracownicyDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 title: string;
 message: string;
-
+errorMessage;
 workers;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) {
@@ -88,9 +95,14 @@ workers;
    }
   //Potwierdzenie dodania pracownika i wysłanie danych do funkcji zajmującej się dodaniem pracownika do bazy danych 
   confirm() {
-    this.crmService.sendWorkerToDB(this.workers);
-    this.result = true;
-    this.close();
+		if(this.workers.imie != null && this.workers.nazwisko != null && this.workers.kodPocztowy != null && this.workers.ulica != null 
+    && this.workers.imie != "" && this.workers.nazwisko != "" && this.workers.kodPocztowy != "" && this.workers.ulica != ""){
+	    this.crmService.sendWorkerToDB(this.workers);
+	    this.result = true;
+			this.close();
+		}else{
+			this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+		}
   }
 
   ngOnInit() {

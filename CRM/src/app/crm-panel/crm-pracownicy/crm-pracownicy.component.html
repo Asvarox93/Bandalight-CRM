@@ -36,4 +36,13 @@
 
 
 </div>
+<div id="ModalBox" class="modal" [style.display]= "isDisplay">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <p>{{modalText}}</p>
+     <span class="btn btn-primary btnModalClose" (click)="modalCloseClick()">Zamknij</span>
+  </div>
+
+</div>
 </div>

@@ -21,6 +21,7 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Uzupełnij poniższe pola aby dodać pojazd</h5>
+				<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="marka" class="cols-sm-2 control-label">Marka</label>
@@ -94,17 +95,25 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: [`
+	styles: [`
+	.main-center{
+		margin: 0 auto;
+	}
   .dateParam{
     display: inline-block !important;
     flex-direction: row !important;
+	}
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
   }
   `]
 })
 export class CrmPojazdyDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 title: string;
 message: string;
-
+errorMessage;
 cars;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) {
@@ -113,9 +122,15 @@ cars;
    }
   //Potwierdzenie dodania pojazdu i wysłanie danych do funkcji zajmującej się dodaniem pojazdu do bazy danych 
   confirm() {
-    this.crmService.sendCarToDB(this.cars);
-    this.result = true;
-    this.close();
+		if(this.cars.marka != null && this.cars.model != null && this.cars.zData != null && this.cars.uData != null && this.cars.pData != null && this.cars.kData != null
+    && this.cars.marka != "" && this.cars.model != "" && this.cars.zData != "" && this.cars.uData != "" && this.cars.pData != "" && this.cars.kData != ""){
+	    this.crmService.sendCarToDB(this.cars);
+	    this.result = true;
+			this.close();
+	}
+		else{
+		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+		}
   }
 
   ngOnInit() {

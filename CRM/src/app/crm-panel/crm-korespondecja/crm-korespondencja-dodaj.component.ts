@@ -20,7 +20,8 @@ export interface ConfirmModel {
                  	<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Zmodyfikuj dane w polach aby edytować.</h5>
+        <h5>Zmodyfikuj dane w polach aby edytować.</h5>
+        <div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa dokumentu</label>
@@ -100,6 +101,11 @@ export interface ConfirmModel {
     height:20px;
     margin-bottom:10px;
   }
+  .alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
   `]
 })
 export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -109,6 +115,7 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
   dateSend;
   UserId:number;
   title:string;
+  errorMessage;
 
 //Zmienne przechowujące informacje z formularz oraz wybrany plik
   Posts;
@@ -130,11 +137,15 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
 
 //Wyslanie informacji o danych formularza oraz pliku do funkcji dodającej do bazy danych
   confirm() {
-    if(this.dateSend==false){
-    this.crmService.sendPostToDB(this.Posts, this.file);
-    this.dateSend = true;
-   };
-    this.result = true;
+    if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null && this.file != null
+    && this.Posts.nazwa != "" && this.Posts.client != "" && this.Posts.dotyczy != "" && this.Posts.data != ""){
+      if(this.dateSend==false){
+      this.crmService.sendPostToDB(this.Posts, this.file);
+      this.dateSend = true;
+     };
+      this.result = true;
+    }
+    this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
   }
 
   getSubscriptToProcentage(){

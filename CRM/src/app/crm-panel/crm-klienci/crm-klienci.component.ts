@@ -16,6 +16,8 @@ export class CrmKlienciComponent implements OnInit {
 
 klienci;
 KlientSearch:string;
+modalText;
+isDisplay;
 
 
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
@@ -30,10 +32,12 @@ KlientSearch:string;
                 .subscribe((isConfirmed)=>{
                
                     if(isConfirmed) {
-                        alert('Klient został dodany do bazy danych');
+                        this.modalText = 'Klient został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Klient nie został dodany do bazy danych');
+                        this.modalText = 'Klient nie został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
@@ -56,15 +60,23 @@ KlientSearch:string;
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane klienta zostały zmodyfikowane');
+                        this.modalText = 'Dane klienta zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane klienta nie zostały zmodyfikowane');
+                        this.modalText = 'Dane klienta nie zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+ 
+  //Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
   }
 
 //Wysyłanie danych klienta do funkcji usuwającej klienta z bazy danych

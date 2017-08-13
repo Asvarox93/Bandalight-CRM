@@ -17,6 +17,9 @@ products;
 //Zmienna przechowująca id szukanego pracownika
 ProductSearch:string;
 
+modalText;
+isDisplay;
+
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
          this.crmService.getProductsFromDb();
    }
@@ -29,10 +32,12 @@ ProductSearch:string;
                 .subscribe((isConfirmed)=>{
                
                     if(isConfirmed) {
-                        alert('Produkt został dodany do bazy danych');
+                        this.modalText ='Produkt został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Produkt nie został dodany do bazy danych');
+                        this.modalText ='Produkt nie został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
@@ -55,15 +60,23 @@ ProductSearch:string;
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane produktu zostały zmodyfikowane');
+                        this.modalText ='Dane produktu zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane produktu nie zostały zmodyfikowane');
+                        this.modalText ='Dane produktu nie zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+
+//Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
   }
 
 //Wysyłanie danych produktu do funkcji usuwającej produkt z bazy danych

@@ -10,11 +10,17 @@
 }
 .pomoc-img-position{
     position: absolute;
-    left:800px;
+    left:80%;
 }
 .main-color{
     color:#ff8213;
 }
 .cont-justify{
     text-align: justify;
+}
+
+@media all and (max-width:1255px){
+    .pomoc-img-position{
+        display: none;
+    }
 }

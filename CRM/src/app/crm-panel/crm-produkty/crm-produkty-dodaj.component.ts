@@ -21,6 +21,7 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Uzupełnij poniższe pola aby dodać produkt</h5>
+					<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="Nazwa" class="cols-sm-2 control-label">Nazwa</label>
@@ -71,7 +72,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-money fa" aria-hidden="true"></i></span>
-									<input type="number" step="0.01" [(ngModel)]="products.vat" class="form-control" name="vat" id="vat" required placeholder="Wprowadz podatek vat"/>
+									<input type="number" step="1" [(ngModel)]="products.vat" class="form-control" name="vat" id="vat" required placeholder="Wprowadz podatek vat"/>
 								</div>
 							</div>
 						</div>
@@ -88,12 +89,21 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: []
+	styles: [`
+	.main-center{
+		margin: 0 auto;
+	}
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
+	`]
 })
 export class CrmProduktyDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 title: string;
 message: string;
-
+errorMessage;
 products;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) {
@@ -102,10 +112,22 @@ products;
    }
   //Potwierdzenie dodania produktu i wysłanie danych do funkcji zajmującej się dodaniem produktu do bazy danych 
   confirm() {
-     this.products.brutto = (parseFloat(this.products.netto)*(1+parseFloat(this.products.vat))).toFixed(2);
-    this.crmService.sendProductToDB(this.products);
-    this.result = true;
-    this.close();
+  if(this.products.type != null && this.products.quantity != null && this.products.netto != null 
+    && this.products.type != "" && this.products.quantity != "" && this.products.netto != "" ){
+			if(this.products.vat == undefined){
+				this.products.vat = 0;
+			}
+			if(this.products.netto < 0 || this.products.vat < 0){
+				this.errorMessage = "Wartość netto i podatek vat nie mogą być mniejsze od zera!";
+			}else{
+		    this.products.brutto = (parseFloat(this.products.netto)*(1+(parseFloat(this.products.vat)/100))).toFixed(2);
+		    this.crmService.sendProductToDB(this.products);
+		    this.result = true;
+				this.close();
+		};
+		}else{
+			this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+		}
   }
 
   ngOnInit() {

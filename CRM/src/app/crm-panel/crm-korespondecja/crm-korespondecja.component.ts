@@ -17,6 +17,9 @@ posts;
 //Zmienna przechowująca id szukanego pracownika
 postsSearch:string;
 
+modalText;
+isDisplay;
+
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
          this.crmService.getPostsFromDb();
    }
@@ -29,10 +32,12 @@ postsSearch:string;
                 .subscribe((isConfirmed)=>{
                
                     if(isConfirmed) {
-                        alert('Korespondencja została dodana do bazy danych');
+                        this.modalText = 'Korespondencja została dodana do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Korespondencja nie została dodana do bazy danych');
+                        this.modalText = 'Korespondencja nie została dodana do bazy danych';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
@@ -55,15 +60,23 @@ postsSearch:string;
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane zostały zmodyfikowane');
+                        this.modalText ='Dane zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane nie zostały zmodyfikowane');
+                        this.modalText ='Dane nie zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+          
+//Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
   }
 
 //Wysyłanie danych korespondecji do funkcji usuwającej dana korespondecje z bazy danych

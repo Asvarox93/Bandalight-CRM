@@ -6,6 +6,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    startScrollWindows = false;
     constructor(private router: Router) { }
 
     ngOnInit() {
@@ -13,8 +14,21 @@ export class AppComponent implements OnInit {
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            window.scrollTo(0, 0)
+            if(this.startScrollWindows != false){
+            var timerIterval = setInterval(function() {
+                    window.scrollBy(0, 10);
+
+                    if( window.pageYOffset >= 600 )
+                     clearInterval(timerIterval);
+                }, 13);
+            }else{
+                this.startScrollWindows = true;
+            }
+            
+
+           
         });
+        
     }
 }
 

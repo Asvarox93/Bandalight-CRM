@@ -21,6 +21,7 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Zmodyfikuj dane w polach aby edytować.</h5>
+				<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa dokumentu</label>
@@ -90,6 +91,11 @@ export interface ConfirmModel {
 	 .dateParam{
     display: inline-block !important;
     flex-direction: row !important;
+	}
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
   }
 	`]
 })
@@ -97,7 +103,7 @@ export class CrmKorespondencjaEdytujComponent extends DialogComponent<ConfirmMod
 
   UserId:number;
   title:string;
-
+  errorMessage;
   Posts;
   klients;
 
@@ -106,9 +112,13 @@ export class CrmKorespondencjaEdytujComponent extends DialogComponent<ConfirmMod
   }
 
   confirm() {
-    this.crmService.editPostsToDb(this.UserId,this.Posts);
-    this.result = true;
-    this.close();
+    if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null 
+    && this.Posts.nazwa != "" && this.Posts.client != "" && this.Posts.dotyczy != "" && this.Posts.data != ""){
+	    this.crmService.editPostsToDb(this.UserId,this.Posts);
+	    this.result = true;
+			this.close();
+		}
+		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
   }
 
   ngOnInit() {

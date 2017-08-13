@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'sbc-panel-pulpit',
   template: `
+  <div class="container-fluid">
   <div class="row">
   <div class="col-md-4">
     <div class="card" routerLink="./zlecenia">
@@ -24,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
     </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 ">
     <div class="card" routerLink="./korespondencja">
       <div class="card-block text-center">
         <h4 class="fa fa-clipboard fa-3x"></h4>
@@ -53,7 +54,7 @@ import { Component, OnInit } from '@angular/core';
     </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 ">
     <div class="card" routerLink="./produkty" >
       <div class="card-block text-center">
         <h4 class="  fa fa-product-hunt fa-3x"></h4>
@@ -83,7 +84,7 @@ import { Component, OnInit } from '@angular/core';
     </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 ">
     <div class="card" routerLink="./raporty">
       <div class="card-block text-center">
         <h4 class="  fa fa-file-text-o fa-3x"></h4>
@@ -93,6 +94,7 @@ import { Component, OnInit } from '@angular/core';
     </div> 
 </div>
 -->
+</div>
   `,
   styles: [`
 
@@ -110,6 +112,7 @@ import { Component, OnInit } from '@angular/core';
   font-size: 1.1em;
   transition: font-size 0.2s ease-in-out;
 }
+
 
     
   `]

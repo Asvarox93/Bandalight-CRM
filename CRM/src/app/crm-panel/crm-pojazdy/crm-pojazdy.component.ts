@@ -12,6 +12,8 @@ import {CrmServiceService} from '../crm-service.service';
 export class CrmPojazdyComponent implements OnInit {
 //Zminna przechowująca informacje o wszystkich pojazdów
 cars;
+modalText;
+isDisplay;
 
 //Zmienna przechowująca id szukanego pojazdu
 CarSearch:string;
@@ -28,10 +30,12 @@ CarSearch:string;
                 .subscribe((isConfirmed)=>{
                
                     if(isConfirmed) {
-                        alert('Pojazd został dodany do bazy danych');
+                        this.modalText ='Pojazd został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Pojazd nie został dodany do bazy danych');
+                        this.modalText = 'Pojazd nie został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
@@ -54,15 +58,23 @@ CarSearch:string;
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane pojazdu zostały zmodyfikowane');
+                        this.modalText ='Dane pojazdu zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane pojazdu nie zostały zmodyfikowane');
+                        this.modalText ='Dane pojazdu nie zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+
+//Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
   }
 
 //Wysyłanie danych pojazdu do funkcji usuwającej klienta z bazy danych

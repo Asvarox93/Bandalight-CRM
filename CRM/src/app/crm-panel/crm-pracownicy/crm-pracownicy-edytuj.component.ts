@@ -21,7 +21,8 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Wszystkie pola muszą być uzupełnione aby edytować pracownika</h5>
-					<form class="" method="post" action="#">
+				<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
+						<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="imie" class="cols-sm-2 control-label">Imie</label>
 							<div class="cols-sm-10">
@@ -74,13 +75,19 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: []
+	styles: [`
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+	}
+	`]
 })
 export class CrmPracownicyEdytujComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 
 UserId:number;
 title:string;
-
+errorMessage;
 workers;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) { 
@@ -89,9 +96,14 @@ workers;
 
 //Wysyła zmienione dane do funkji edytującej aktualne dane użytkownika z podanymi.
   confirm() {
+		if(this.workers.imie != null && this.workers.nazwisko != null && this.workers.kodPocztowy != null && this.workers.ulica != null 
+    && this.workers.imie != "" && this.workers.nazwisko != "" && this.workers.kodPocztowy != "" && this.workers.ulica != ""){
     this.crmService.editWorkersToDb(this.UserId,this.workers);
     this.result = true;
-    this.close();
+		this.close();
+		}else{
+			this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+		}
   }
 
   ngOnInit() {

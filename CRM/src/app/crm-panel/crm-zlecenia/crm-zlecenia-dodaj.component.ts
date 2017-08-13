@@ -20,7 +20,8 @@ export interface ConfirmModel {
                  	<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Uzupełnij wszystkie pola aby dodać nowe zlecenie</h5>
+        <h5>Uzupełnij wszystkie pola aby dodać nowe zlecenie</h5>
+        <div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa Klienta</label>
@@ -39,7 +40,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-road fa" aria-hidden="true"></i></span>
-									<input type="date" class="form-control dateParam" [(ngModel)]="orders.data" name="date" id="date" required/>
+									<input type="date" class="form-control dateParam" required [(ngModel)]="orders.data" name="date" id="date" required/>
 								</div>
 							</div>
 						</div>
@@ -47,8 +48,11 @@ export interface ConfirmModel {
 							<label for="pracownik" class="cols-sm-2 control-label">Pracownik</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-building fa-lg" aria-hidden="true"></i></span>
-									<input type="text" [(ngModel)]="orders.pracownik" class="form-control" name="pracownik" id="pracownik" required placeholder="Wprowadz nazwę pracownika"/>
+                  <span class="input-group-addon"><i class="fa fa-building fa-lg" aria-hidden="true"></i></span>
+                  <select class="form-control" required [(ngModel)]="orders.pracownik" name="pracownik" id="pracownik"> <!-- <== changed -->
+                    <option value="" selected="selected" disabled>Wybierz Pracownika</option>
+                    <option *ngFor="let worker of workers"  [ngValue]="worker.imie +' '+ worker.nazwisko">{{worker.imie}} {{ worker.nazwisko }}</option>
+                  </select>
 								</div>
 							</div>
 						</div>
@@ -56,7 +60,7 @@ export interface ConfirmModel {
 							<label for="trescZlecenia" class="cols-sm-2 control-label">Treść Zlecenia</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-									<textarea class="form-control" placeholder="Treść dodawanego zlecenia" [(ngModel)]="orders.tresc" name="tresc" id="tresc"></textarea>
+									<textarea class="form-control" placeholder="Treść dodawanego zlecenia" required [(ngModel)]="orders.tresc" name="tresc" id="tresc"></textarea>
                  </div>
 							</div>
 						</div>
@@ -77,6 +81,11 @@ export interface ConfirmModel {
     display: inline-block !important;
     flex-direction: row !important;
   }
+  .alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
   `]
 })
 export class CrmZleceniaDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -84,7 +93,9 @@ export class CrmZleceniaDodajComponent extends DialogComponent<ConfirmModel, boo
 title: string;
 message: string;
 klients;
+workers;
 orders;
+errorMessage;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) { 
     super(dialogService);
@@ -93,9 +104,13 @@ orders;
 
 //Wysyłanie danych zlecenia po zatwierdzeniu formularza przez użytkownika
   confirm() {
-    this.crmService.sendOrderToDB(this.orders);
-    this.result = true;
-    this.close();
+   if(this.orders.nazwa != null && this.orders.data != null && this.orders.pracownik != null && this.orders.tresc != null 
+    && this.orders.nazwa != "" && this.orders.data != "" && this.orders.pracownik != "" && this.orders.tresc != ""){
+      this.crmService.sendOrderToDB(this.orders);
+      this.result = true;  
+      this.close();
+    }
+    this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
   }
 
   ngOnInit() {
@@ -103,12 +118,18 @@ orders;
    this.crmService.subscribeToGetKleints().subscribe((klients)=>{
    this.klients = klients;
    });
+   this.crmService.subscribeToGetWorkers().subscribe((workers)=>{
+   this.workers = workers;
+   });
   }
 
   //Pobieranie listy klientów po załadowaniu komponentu
    ngAfterContentInit(){
     if( this.klients == "" || this.klients == null || this.klients == undefined){
     this.crmService.getKlientFromDb();
+    }
+   if( this.workers == "" || this.workers == null || this.workers == undefined){
+    this.crmService.getWorkersFromDb();
     }
    }
 

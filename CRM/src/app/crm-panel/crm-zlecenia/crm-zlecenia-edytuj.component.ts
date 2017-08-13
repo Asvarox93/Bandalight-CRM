@@ -20,7 +20,8 @@ export interface ConfirmModel {
                  	<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Uzupełnij wszystkie pola aby dodać nowe zlecenie</h5>
+        <h5>Uzupełnij wszystkie pola aby dodać nowe zlecenie</h5>
+        <div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa Klienta</label>
@@ -77,6 +78,11 @@ export interface ConfirmModel {
     display: inline-block !important;
     flex-direction: row !important;
   }
+  .alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
  `]
 })
 export class CrmZleceniaEdytujComponent  extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -85,15 +91,19 @@ export class CrmZleceniaEdytujComponent  extends DialogComponent<ConfirmModel, b
   title:string;
   klients;
   orders;
+  errorMessage;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) {
     super(dialogService);
    }
   
    confirm() {
+    if(this.orders.nazwa != null && this.orders.data != null && this.orders.pracownik != null && this.orders.tresc != null && this.orders.nazwa != "" && this.orders.data != "" && this.orders.pracownik != "" && this.orders.tresc != ""){
     this.crmService.editOrdersToDb(this.UserId,this.orders);
     this.result = true;
     this.close();
+    }
+    this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
   }
 
   ngOnInit() {

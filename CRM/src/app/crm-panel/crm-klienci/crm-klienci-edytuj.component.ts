@@ -21,6 +21,7 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Zmodyfikuj dane w polach aby edytować klienta</h5>
+				<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>
 					<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa</label>
@@ -84,14 +85,20 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: []
+	styles: [`
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
+	`]
 })
 
 export class CrmKlienciEdytujComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 
 UserId:number;
 title:string;
-
+errorMessage;
 klienci;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) { 
@@ -99,9 +106,12 @@ klienci;
   }
 
   confirm() {
-    this.crmService.EditKleintToDb(this.UserId,this.klienci);
-    this.result = true;
-    this.close();
+		if(this.klienci.nazwa != null && this.klienci.ulica != null && this.klienci.kodPocztowy != null && this.klienci.miasto != null 
+    && this.klienci.nazwa != "" && this.klienci.ulica != "" && this.klienci.kodPocztowy != "" && this.klienci.miasto != ""){
+	    this.crmService.EditKleintToDb(this.UserId,this.klienci);
+	    this.result = true;
+			this.close();
+		}
   }
 
   ngOnInit() {

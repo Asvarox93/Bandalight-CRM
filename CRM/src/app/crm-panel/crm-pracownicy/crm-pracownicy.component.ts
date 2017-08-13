@@ -17,6 +17,9 @@ workers;
 //Zmienna przechowująca id szukanego pracownika
 WorkerSearch:string;
 
+modalText;
+isDisplay;
+
   constructor(private dialogService:DialogService, private crmService: CrmServiceService) {
          this.crmService.getWorkersFromDb();
    }
@@ -29,10 +32,12 @@ WorkerSearch:string;
                 .subscribe((isConfirmed)=>{
                
                     if(isConfirmed) {
-                        alert('Pracownik został dodany do bazy danych');
+                        this.modalText = 'Pracownik został dodany do bazy danych';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Pracownik nie został dodany do bazy danych');
+                         this.modalText = 'Pracownik nie został dodany do bazy danych';
+                         this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
@@ -55,15 +60,23 @@ WorkerSearch:string;
                 .subscribe((isConfirmed)=>{
                   
                     if(isConfirmed) {
-                        alert('Dane pracownika zostały zmodyfikowane');
+                        this.modalText = 'Dane pracownika zostały zmodyfikowane';
+                        this.isDisplay = "block";
                     }
                     else {
-                        alert('Dane pracownika nie zostały zmodyfikowane');
+                         this.modalText = 'Dane pracownika nie zostały zmodyfikowane';
+                         this.isDisplay = "block";
                     }
                 });
             //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             
+  }
+
+//Zamykanie modala po nacisnieciu na przycisk close
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
   }
 
 //Wysyłanie danych pracownika do funkcji usuwającej klienta z bazy danych

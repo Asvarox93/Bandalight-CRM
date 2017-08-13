@@ -21,7 +21,8 @@ export interface ConfirmModel {
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Uzupełnij wszystkie pola aby dodać nowego klienta</h5>
-					<form class="" method="post" action="#">
+				<div class="alert-danger mt-2 mb-2" *ngIf="errorMessage">{{errorMessage}}</div>	
+				<form class="" method="post" action="#">
 						<div class="form-group">
 							<label for="nazwa" class="cols-sm-2 control-label">Nazwa</label>
 							<div class="cols-sm-10">
@@ -84,12 +85,18 @@ export interface ConfirmModel {
                  </div>
               </div>
   `,
-  styles: []
+	styles: [`
+	.alert-danger{
+    font-size:1.5em;
+    text-align:center;
+    padding: 20px;
+  }
+	`]
 })
 export class CrmKlienciDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
 title: string;
 message: string;
-
+errorMessage;
 klienci;
 
   constructor(dialogService: DialogService, private crmService: CrmServiceService) { 
@@ -98,9 +105,13 @@ klienci;
   }
 
   confirm() {
-    this.crmService.sendKlientToDB(this.klienci);
-    this.result = true;
-    this.close();
+		if(this.klienci.nazwa != null && this.klienci.ulica != null && this.klienci.kodPocztowy != null && this.klienci.miasto != null 
+    && this.klienci.nazwa != "" && this.klienci.ulica != "" && this.klienci.kodPocztowy != "" && this.klienci.miasto != ""){
+	    this.crmService.sendKlientToDB(this.klienci);
+	    this.result = true;
+			this.close();
+		}
+		this.errorMessage = "Wszystkie dane poza notatkami muszą zostać wprowadzone!";
   }
 
   ngOnInit() {
