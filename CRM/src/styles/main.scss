@@ -55,6 +55,7 @@ ngb-carousel{
    text-decoration: none;
    font-weight: 500;
 }
+
 @media (min-width: 576px) { 
     body{font-size: 10px;}
     ngb-carousel{
@@ -78,4 +79,10 @@ ngb-carousel{
 ngb-carousel{
     height: 650px;
 }
+}
+@media all and (max-width: 753px) {
+	table {
+		overflow-x: auto;
+		display: block;
+	}
 }

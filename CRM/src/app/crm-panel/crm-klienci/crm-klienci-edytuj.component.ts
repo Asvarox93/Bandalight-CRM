@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
 import {CrmServiceService} from '../crm-service.service';
@@ -106,16 +107,42 @@ klienci;
   }
 
   confirm() {
+		var kodPocztowyValidation = new RegExp("^([0-9]{2}-[0-9]{3})$");
+		var ulicaValidation = new RegExp("^([A-zśćżęóął]+ [A-zśćżęóął]* *[0-9]{1,3}[abcABC]{0,1})$");
+		var nazwaIMiastoValidation = new RegExp("^([A-zśćżęóął]+ *[A-zśćżęóął]*)$");
+		this.errorMessage="";
+		
+		
 		if(this.klienci.nazwa != null && this.klienci.ulica != null && this.klienci.kodPocztowy != null && this.klienci.miasto != null 
     && this.klienci.nazwa != "" && this.klienci.ulica != "" && this.klienci.kodPocztowy != "" && this.klienci.miasto != ""){
-	    this.crmService.EditKleintToDb(this.UserId,this.klienci);
-	    this.result = true;
-			this.close();
+			
+			if(!nazwaIMiastoValidation.test(this.klienci.nazwa)){
+				this.errorMessage += "Wprowadzona nazwa klienta jest nieprawidłowa!\n";
+			};
+			if(!ulicaValidation.test(this.klienci.ulica)){
+				this.errorMessage += "Wprowadzona nazwa ulicy jest nieprawidłowa!\n";
+			};
+			if(!kodPocztowyValidation.test(this.klienci.kodPocztowy)){
+			 this.errorMessage += "Wprowadzony kod pocztowy jest nieprawidłowy!\n";
+			};
+			if(!nazwaIMiastoValidation.test(this.klienci.miasto)){
+				this.errorMessage += "Wprowadzona nazwa miasta jest nieprawidłowa!\n";
+			};
+
+			if(this.errorMessage == ""){
+		    this.crmService.EditKleintToDb(this.UserId,this.klienci);
+		    this.result = true;
+				this.close();
+			};
+		}else{
+				this.errorMessage = "Wszystkie dane poza notatkami muszą zostać wprowadzone!\n";
 		}
   }
 
   ngOnInit() {
-    this.klienci = this.crmService.getKlientToEdit(this.UserId);
+		this.klienci = this.crmService.getKlientToEdit(this.UserId);
+		
+		
   }
 
 }

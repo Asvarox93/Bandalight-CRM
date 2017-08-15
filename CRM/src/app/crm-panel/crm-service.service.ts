@@ -162,20 +162,21 @@ sendPostToDB(data, file){
   var user:any = firebase.auth().currentUser;
   var database = firebase.database();
   var ref =  database.ref('/users/'+user.uid+'/posts');
-  ref.push(data);
   var storageRef = firebase.storage().ref(user.uid+"/"+data.plik)
   var task = storageRef.put(file);
-  
+  var getPostsFromDB = this;
   task.on('state_changed',
    function progress(snapshot){
    var procentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
    mainthis.postFileStream.next(procentage);
    },
-   function error(err){},
-   function complete(){}
+   function error(err){
+   },
+   function complete(){
+      ref.push(data);
+      getPostsFromDB.getPostsFromDb();
+   }
    );
-
-  this.getPostsFromDb();
 }
 
 //Wysyłanie danych nowego pojazdu do bazy danych
@@ -465,32 +466,44 @@ subscribeToGetRegStatus(){
 
 //Pobieranie aktualnych danych klienta potrzebnych do jego edycji
 getKlientToEdit(data){
-  return this.klients[data];
+  var obj = {};
+  Object.assign(obj,this.klients[data]);
+  return obj;
 }
 
 //Pobieranie aktualnych danych zlecenia potrzebnych do edycji
 getOrdersToEdit(data){
-  return this.orders[data];
+  var obj = {};
+  Object.assign(obj,this.orders[data]);
+  return obj;
 }
 
 //Pobieranie aktualnych danych pracownika potrzebnych do edycji
 getWorkerToEdit(data){
-  return this.workers[data];
+  var obj = {};
+  Object.assign(obj,this.workers[data]);
+  return obj;
 }
 
 //Pobieranie aktualnych danych korespondencji potrzebnych do edycji
 getPostToEdit(data){
-  return this.posts[data];
+  var obj = {};
+  Object.assign(obj,this.posts[data]);
+  return obj;
 }
 
 //Pobieranie aktualnych danych pojazdów potrzebnych do edycji
 getCarToEdit(data){
-  return this.cars[data];
+  var obj = {};
+  Object.assign(obj,this.cars[data]);
+  return obj;
 }
 
 //Pobieranie aktualnych danych pojazdów potrzebnych do edycji
 getProductToEdit(data){
-  return this.products[data];
+  var obj = {};
+  Object.assign(obj,this.products[data]);
+  return obj;
 }
 
 

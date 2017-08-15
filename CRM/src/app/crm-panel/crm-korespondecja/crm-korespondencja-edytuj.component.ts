@@ -112,15 +112,33 @@ export class CrmKorespondencjaEdytujComponent extends DialogComponent<ConfirmMod
   }
 
   confirm() {
-    if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null 
+		this.errorMessage = "";
+  
+    if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null
     && this.Posts.nazwa != "" && this.Posts.client != "" && this.Posts.dotyczy != "" && this.Posts.data != ""){
-	    this.crmService.editPostsToDb(this.UserId,this.Posts);
-	    this.result = true;
-			this.close();
-		}
-		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
-  }
+      var parts = this.Posts.data.split("-");
+      var d = new Date();
+      if(parseInt(parts[0]) != d.getFullYear()){
+        this.errorMessage += "Wprowadzona data nie zgadza się z aktualnym rokiem!\n";
+      }
+      if(parseInt(parts[0]) === d.getFullYear() && parseInt(parts[1]) > d.getMonth()){
+        this.errorMessage += "Podany miesiąc wybiega w przyszłość!\n";
+			}
+			if(parseInt(parts[1]) === d.getMonth()+1 && parseInt(parts[2]) > d.getDate()){
+				this.errorMessage += "Podany dzień wybiega w przyszłość!\n";
+			}
 
+      if(this.errorMessage == ""){
+	      this.crmService.editPostsToDb(this.UserId,this.Posts);
+		    this.result = true;
+				this.close();
+      };
+      
+    }else{
+      this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+    }
+	 }
+	
   ngOnInit() {
 	 this.crmService.subscribeToGetKleints().subscribe((klients)=>{
    this.klients = klients;

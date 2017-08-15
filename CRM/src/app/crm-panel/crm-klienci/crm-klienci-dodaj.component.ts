@@ -28,7 +28,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" [(ngModel)]="klienci.nazwa" class="form-control" name="nazwa" id="nazwa" required  placeholder="Wprowadz nazwę klienta"/>
+									<input type="text" [(ngModel)]="klienci.nazwa" class="form-control" name="nazwa" id="nazwa" required  placeholder="Wprowadz nazwę klienta (wz. Jan Kowalski)"/>
 								</div>
 							</div>
 						</div>
@@ -38,7 +38,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-road fa" aria-hidden="true"></i></span>
-									<input type="text" [(ngModel)]="klienci.ulica" class="form-control" name="ulica" id="ulica" required placeholder="Wprowadz ulicę"/>
+									<input type="text" [(ngModel)]="klienci.ulica" class="form-control" name="ulica" id="ulica" required placeholder="Wprowadz ulicę (wz. Jana Pawła 2a)"/>
 								</div>
 							</div>
 						</div>
@@ -48,7 +48,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></span>
-									<input type="text" [(ngModel)]="klienci.kodPocztowy" class="form-control" name="kodPocztowy" id="kodPocztowy" required placeholder="Wprowadz kod pocztowy"/>
+									<input type="text" [(ngModel)]="klienci.kodPocztowy" class="form-control" name="kodPocztowy" id="kodPocztowy" required placeholder="Wprowadz kod pocztowy (wz. 39-300)"/>
 								</div>
 							</div>
 						</div>
@@ -58,7 +58,7 @@ export interface ConfirmModel {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-building fa-lg" aria-hidden="true"></i></span>
-									<input type="text" [(ngModel)]="klienci.miasto" class="form-control" name="miasto" id="miasto" required placeholder="Wprowadz miasto"/>
+									<input type="text" [(ngModel)]="klienci.miasto" class="form-control" name="miasto" id="miasto" required placeholder="Wprowadz miasto (wz. Katowice)"/>
 								</div>
 							</div>
 						</div>
@@ -105,14 +105,40 @@ klienci;
   }
 
   confirm() {
+		var kodPocztowyValidation = new RegExp("^([0-9]{2}-[0-9]{3})$");
+		var ulicaValidation = new RegExp("^([A-zśćżęóął]+ [A-zśćżęóął]* *[0-9]{1,3}[abcABC]{0,1})$");
+		var nazwaIMiastoValidation = new RegExp("^([A-zśćżęóął]+ *[A-zśćżęóął]*)$");
+		this.errorMessage="";
+		
+		
 		if(this.klienci.nazwa != null && this.klienci.ulica != null && this.klienci.kodPocztowy != null && this.klienci.miasto != null 
     && this.klienci.nazwa != "" && this.klienci.ulica != "" && this.klienci.kodPocztowy != "" && this.klienci.miasto != ""){
-	    this.crmService.sendKlientToDB(this.klienci);
-	    this.result = true;
-			this.close();
+			
+			if(!nazwaIMiastoValidation.test(this.klienci.nazwa)){
+				this.errorMessage += "Wprowadzona nazwa klienta jest nieprawidłowa!\n";
+			};
+			if(!ulicaValidation.test(this.klienci.ulica)){
+				this.errorMessage += "Wprowadzona nazwa ulicy jest nieprawidłowa!\n";
+			};
+			if(!kodPocztowyValidation.test(this.klienci.kodPocztowy)){
+			 this.errorMessage += "Wprowadzony kod pocztowy jest nieprawidłowy!\n";
+			};
+			if(!nazwaIMiastoValidation.test(this.klienci.miasto)){
+				this.errorMessage += "Wprowadzona nazwa miasta jest nieprawidłowa!\n";
+			};
+
+			if(this.errorMessage == ""){
+		    this.crmService.sendKlientToDB(this.klienci);
+		    this.result = true;
+				this.close();
+			};
+		}else{
+		this.errorMessage = "Wszystkie dane poza notatkami muszą zostać wprowadzone!\n";
 		}
-		this.errorMessage = "Wszystkie dane poza notatkami muszą zostać wprowadzone!";
-  }
+	}
+	
+
+
 
   ngOnInit() {
   }

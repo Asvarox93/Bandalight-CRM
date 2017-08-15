@@ -82,12 +82,68 @@ export interface ConfirmModel {
                    </div>
                    <div class="modal-footer">
                      <button type="button" class="btn btn-primary" (click)="confirm()">OK</button>
-                     <button type="button" class="btn btn-default" (click)="close()" >Cancel</button>
+                     <button type="button" class="btn btn-default" (click)="closing()" >Cancel</button>
                    </div>
                  </div>
+                 <div id="ModalBox" class="modalIn" [style.display]= "isDisplay">
+
+                  <!-- Modal content -->
+                  <div class="modalIn-content">
+                    <p>{{modalText}}</p>
+                    <div class="modalBtnCenter">
+                     <div class="btn btn-primary btnModalClose" (click)="modalAgreeClick()">TAK</div>
+                     <div class="btn btn-primary btnModalClose" (click)="modalCloseClick()">NIE</div>
+                     </div>
+                  </div>
+                
+                </div>
               </div>
   `,
   styles: [`
+  .modalIn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 99999999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modalIn-content {
+    position:relative;
+    background-color: #fefefe;
+    margin: 25% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    font-size: 1.5em;
+}
+.modalBtnCenter{
+  width:100%;
+  text-align:center;
+  margin:0 auto;
+}
+/* The Close Button */
+.btnModalClose {
+    color: #aaa;
+    width:fit-content;
+    height: 40px;
+    color:#fff;
+    background-color: #ff8213;
+    border-color:#f97e11;
+}
+
+.btnModalClose:hover,
+.btnModalClose:focus {
+    background-color: #fff;
+    color:#ff8213;  
+    cursor: pointer;
+}
   .dateParam{
     display: inline-block !important;
     flex-direction: row !important;
@@ -116,6 +172,8 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
   UserId:number;
   title:string;
   errorMessage;
+  modalText:string;
+  isDisplay;
 
 //Zmienne przechowujące informacje z formularz oraz wybrany plik
   Posts;
@@ -137,15 +195,52 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
 
 //Wyslanie informacji o danych formularza oraz pliku do funkcji dodającej do bazy danych
   confirm() {
+    this.errorMessage = "";
+    if(this.dateSend ==  true && this.procentage < 100){
+    this.errorMessage = "Trwa upload wybranego pliku, proszę czekać";
+    }else if(this.dateSend ==  false ){
     if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null && this.file != null
     && this.Posts.nazwa != "" && this.Posts.client != "" && this.Posts.dotyczy != "" && this.Posts.data != ""){
-      if(this.dateSend==false){
+      var parts = this.Posts.data.split("-");
+      var d = new Date();
+      if(parseInt(parts[0]) != d.getFullYear()){
+        this.errorMessage += "Wprowadzona data nie zgadza się z aktualnym rokiem!\n";
+      }
+      if(parseInt(parts[0]) === d.getFullYear() && parseInt(parts[1]) > d.getMonth()+1){
+
+        this.errorMessage += "Podany miesiąc wybiega w przyszłość!\n";
+			}
+			if(parseInt(parts[1]) === d.getMonth()+1 && parseInt(parts[2]) > d.getDate()){
+				this.errorMessage += "Podany dzień wybiega w przyszłość!\n";
+			}
+
+      if(this.dateSend==false && this.errorMessage == ""){
       this.crmService.sendPostToDB(this.Posts, this.file);
       this.dateSend = true;
      };
       this.result = true;
+    }else{
+      this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
     }
-    this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+   }
+  }
+
+  modalCloseClick(){
+    this.isDisplay = "none";
+    this.modalText = "";
+  }
+
+  modalAgreeClick(){
+    this.close();
+  }
+
+  closing(){
+   if(this.dateSend ==  true && this.procentage < 100){
+      this.modalText = "Trwa wgrywanie wybranego pliku. Czy anulowac?";
+      this.isDisplay = "block";
+   }else{
+     this.close();
+   }
   }
 
   getSubscriptToProcentage(){
@@ -153,8 +248,8 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
           this.procentage = procentage;
           if(this.procentage == 100){
             this.close();
-            this.confirm();
-            this.crmService.getPostsFromDb();
+          }else{
+          //  this.errorMessage = "Upload pliku nie powiódł się. Spróbuj ponownie!";
           }
       });
   }

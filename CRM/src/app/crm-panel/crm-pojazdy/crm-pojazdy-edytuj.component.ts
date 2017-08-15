@@ -132,6 +132,16 @@ cars;
 		else{
 		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
 		}
+
+		var kodPocztowyValidation = new RegExp("^([0-9]{2}-[0-9]{3})$");
+		var ulicaValidation = new RegExp("^([A-zśćżęóął]+ [A-zśćżęóął]* *[0-9]{1,3}[abcABC]{0,1})$");
+		var nazwaIMiastoValidation = new RegExp("^([A-zśćżęóął]+ *[A-zśćżęóął]*)$");
+		this.errorMessage="";
+		
+		
+	
+
+
   }
 
   ngOnInit() {

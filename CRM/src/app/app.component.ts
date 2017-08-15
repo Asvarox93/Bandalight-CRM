@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+
 @Component({
   selector: 'sbc-root',
   templateUrl: './app.component.html',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            if(this.startScrollWindows != false){
+            if(this.startScrollWindows != false && this.router.url === "/" || this.router.url === "/oferta" || this.router.url === "/pomoc" || this.router.url === "/kontakt"){
             var timerIterval = setInterval(function() {
                     window.scrollBy(0, 10);
 
@@ -23,9 +24,7 @@ export class AppComponent implements OnInit {
                 }, 13);
             }else{
                 this.startScrollWindows = true;
-            }
-            
-
+            }            
            
         });
         
