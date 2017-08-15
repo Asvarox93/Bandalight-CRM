@@ -90,7 +90,16 @@ export interface ConfirmModel {
     font-size:1.5em;
     text-align:center;
     padding: 20px;
-  }
+	}
+	.modal-content{
+		height:min-content;
+	}
+  
+	@media all and (max-height: 500px) {
+	.modal-content{
+		height:400px;
+	}
+	}
 	`]
 })
 export class CrmKlienciDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -106,8 +115,8 @@ klienci;
 
   confirm() {
 		var kodPocztowyValidation = new RegExp("^([0-9]{2}-[0-9]{3})$");
-		var ulicaValidation = new RegExp("^([A-zśćżęóął]+ [A-zśćżęóął]* *[0-9]{1,3}[abcABC]{0,1})$");
-		var nazwaIMiastoValidation = new RegExp("^([A-zśćżęóął]+ *[A-zśćżęóął]*)$");
+		var ulicaValidation = new RegExp("^([A-ząśćżźóęńł]+ [A-ząśćżźóęńł]* *[0-9]{1,3}[abcABC]{0,1})$");
+		var nazwaIMiastoValidation = new RegExp("^([A-ząśćżźóęńł]+ *[A-ząśćżźóęńł]*)$");
 		this.errorMessage="";
 		
 		

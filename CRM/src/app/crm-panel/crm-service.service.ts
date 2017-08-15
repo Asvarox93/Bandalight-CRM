@@ -39,6 +39,7 @@ posts;
 $postLists;
 postStream = new Subject();
 postFileStream = new Subject();
+fileNameCheckStream = new Subject();
 postData;
 
 //Zmienne pojazdów
@@ -163,20 +164,30 @@ sendPostToDB(data, file){
   var database = firebase.database();
   var ref =  database.ref('/users/'+user.uid+'/posts');
   var storageRef = firebase.storage().ref(user.uid+"/"+data.plik)
-  var task = storageRef.put(file);
-  var getPostsFromDB = this;
-  task.on('state_changed',
-   function progress(snapshot){
-   var procentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
-   mainthis.postFileStream.next(procentage);
-   },
-   function error(err){
-   },
-   function complete(){
-      ref.push(data);
-      getPostsFromDB.getPostsFromDb();
-   }
-   );
+  storageRef.getDownloadURL().then(onResolve, onReject);
+  function onResolve(foundURL) {
+      mainthis.fileNameCheckStream.next(false);
+  }
+  
+  function onReject(error) {
+    if(error == 404 || error){
+      mainthis.fileNameCheckStream.next(true);
+    var task = storageRef.put(file);
+    task.on('state_changed',
+     function progress(snapshot){
+     var procentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+     mainthis.postFileStream.next(procentage);
+     },
+     function error(err){
+     },
+     function complete(){
+        ref.push(data);
+        mainthis.getPostsFromDb();
+     }
+     );
+    };
+  }
+
 }
 
 //Wysyłanie danych nowego pojazdu do bazy danych
@@ -447,6 +458,11 @@ subscribeToGetPosts(){
 //Tworzenie obiektu do obserwowania uploadowanych plików korespondencji na zmianny w innych komponentach
 subscribeToGetPostsFileUploadProgress(){
   return Observable.from(this.postFileStream);
+}
+
+//Tworzenie obiektu do obserwowania nazw plików korespondencji na zmianny w innych komponentach
+subscribeToGetPostsFileName(){
+  return Observable.from(this.fileNameCheckStream);
 }
 
 //Tworzenie obiektu do obserwowania pojazdów na zmianny w innych komponentach

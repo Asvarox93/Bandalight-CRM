@@ -86,6 +86,15 @@ export interface ConfirmModel {
     text-align:center;
     padding: 20px;
   }
+  .modal-content{
+		height:min-content;
+	}
+ 
+	@media all and (max-height: 500px) {
+	.modal-content{
+		height:400px;
+  }
+  }
   `]
 })
 export class CrmZleceniaDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {

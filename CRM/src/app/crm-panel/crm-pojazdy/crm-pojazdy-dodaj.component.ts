@@ -96,6 +96,9 @@ export interface ConfirmModel {
               </div>
   `,
 	styles: [`
+	.modal-content{
+		height:900px;
+	}
 	.main-center{
 		margin: 0 auto;
 	}
@@ -107,7 +110,17 @@ export interface ConfirmModel {
     font-size:1.5em;
     text-align:center;
     padding: 20px;
-  }
+	}
+	@media all and (max-height: 900px) {
+	.modal-content{
+		height:800px;
+	}
+	}
+	@media all and (max-height: 700px) {
+	.modal-content{
+		height:600px;
+	}
+}
   `]
 })
 export class CrmPojazdyDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -122,14 +135,64 @@ cars;
    }
   //Potwierdzenie dodania pojazdu i wysłanie danych do funkcji zajmującej się dodaniem pojazdu do bazy danych 
   confirm() {
+		var markaIModelValidation = new RegExp("^([A-zśćżęóął]{3,15})$");
+		var kmValidation = new RegExp("^([0-9]{1,6})$");
+		this.errorMessage="";
+		
+		
 		if(this.cars.marka != null && this.cars.model != null && this.cars.zData != null && this.cars.uData != null && this.cars.pData != null && this.cars.kData != null
     && this.cars.marka != "" && this.cars.model != "" && this.cars.zData != "" && this.cars.uData != "" && this.cars.pData != "" && this.cars.kData != ""){
-	    this.crmService.sendCarToDB(this.cars);
-	    this.result = true;
-			this.close();
-	}
-		else{
-		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+			 var parts = this.cars.zData.split("-");
+			 var partsU = this.cars.uData.split("-");
+			 var partsP = this.cars.pData.split("-");
+       var d = new Date();
+     
+			if(!markaIModelValidation.test(this.cars.marka)){
+				this.errorMessage += "Wprowadzona nazwa marki jest nieprawidłowa!\n";
+			};
+			if(!markaIModelValidation.test(this.cars.model)){
+				this.errorMessage += "Wprowadzony model pojazdu jest nieprawidłowy!\n";
+			};
+			 if(parseInt(parts[0]) > d.getFullYear() || parseInt(parts[0]) < 1950){
+					this.errorMessage += "Wprowadzony rok zakupu pojazdu jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(parts[0]) == d.getFullYear() && parseInt(parts[1]) > d.getMonth()+1 ||
+				  parseInt(parts[0]) == d.getFullYear() && parseInt(parts[1]) == d.getMonth()+1 && parseInt(parts[2]) > d.getDate() ){
+					this.errorMessage += "Wprowadzony dzień i/lub miesiąc zakupu pojazdu jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(partsU[0]) > d.getFullYear()){
+					this.errorMessage += "Wprowadzony rok ubezpieczenia pojazdu jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(partsU[0]) == d.getFullYear() && parseInt(partsU[1]) > d.getMonth()+1 ||
+				  parseInt(partsU[0]) == d.getFullYear() && parseInt(partsU[1]) == d.getMonth()+1 && parseInt(partsU[2]) > d.getDate() ){
+					this.errorMessage += "Wprowadzony dzień i/lub miesiąc ubezpieczenia jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(partsU[0])<parseInt(parts[0] || parseInt(partsU[0]) == parseInt(parts[0]) && parseInt(partsU[1])<parseInt(parts[1]) ||
+				  parseInt(partsU[0]) == parseInt(parts[0]) && parseInt(partsU[1]) == parseInt(parts[1]) && parseInt(partsU[2]) < parseInt(parts[2]))){
+					this.errorMessage += "Wprowadzona data ubezpieczenia jest starsza od daty zakupu samochodu!\n"
+				};
+				if(parseInt(partsP[0]) > d.getFullYear()){
+					this.errorMessage += "Wprowadzony rok przeglądu pojazdu jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(partsP[0]) == d.getFullYear() && parseInt(partsP[1]) > d.getMonth()+1 ||
+				  parseInt(partsP[0]) == d.getFullYear() && parseInt(partsP[1]) == d.getMonth()+1 && parseInt(partsP[2]) > d.getDate() ){
+					this.errorMessage += "Wprowadzony dzień i/lub miesiąc przeglądu jest nieprawidłowy!\n";
+			 };
+			 if(parseInt(partsP[0])<parseInt(parts[0] || parseInt(partsP[0]) == parseInt(parts[0]) && parseInt(partsP[1])<parseInt(parts[1]) ||
+				  parseInt(partsP[0]) == parseInt(parts[0]) && parseInt(partsP[1]) == parseInt(parts[1]) && parseInt(partsP[2]) < parseInt(parts[2]))){
+					this.errorMessage += "Wprowadzona data przeglądu jest starsza od daty zakupu samochodu!\n"
+				};
+				if(!kmValidation.test(this.cars.kData)){
+				this.errorMessage += "Wprowadzono blędne dane w polu z kilometrami!\n";
+				};
+
+				if(this.errorMessage == ""){
+			   this.crmService.sendCarToDB(this.cars);
+		    this.result = true;
+				this.close();
+				};
+		}else{
+		this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!\n";
 		}
   }
 

@@ -86,3 +86,11 @@ ngb-carousel{
 		display: block;
 	}
 }
+
+.modal-dialog{
+     display: block !important;
+     overflow-y: initial !important
+}
+.modal-content{
+     overflow-y: auto;
+}

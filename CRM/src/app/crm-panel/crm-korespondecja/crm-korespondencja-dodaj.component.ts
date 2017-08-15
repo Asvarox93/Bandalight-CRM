@@ -66,7 +66,8 @@ export interface ConfirmModel {
 							</div>
 						</div>
 
-						<div class="form-group">
+            <div class="form-group">
+              <div class="alert-success mt-2 mb-2" *ngIf="sendStart">{{sendStart}}</div>
 							<label for="plik" class="cols-sm-2 control-label">Nazwa pliku</label>
 							<div class="cols-sm-10">
                 <progress [value]="procentage" max="100" id="uploader">0</progress>
@@ -162,6 +163,15 @@ export interface ConfirmModel {
     text-align:center;
     padding: 20px;
   }
+  .modal-content{
+			height:min-content;
+	}
+  
+	@media all and (max-height: 500px) {
+	.modal-content{
+		height:400px;
+  }
+  }
   `]
 })
 export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
@@ -172,6 +182,9 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
   UserId:number;
   title:string;
   errorMessage;
+  sendStart:string;
+  toCheckName:boolean;
+  checkFileName:boolean;
   modalText:string;
   isDisplay;
 
@@ -190,7 +203,9 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
 //Przypisanie wybranego pliku przez uzytkownika do odpowiedniej zmiennej, oraz wyłuskanie nazwy tego pliku.
   fileEvent(fileInput: any){
     this.file = fileInput.target.files[0];
-    this.Posts.plik = this.file.name;
+    if(this.file != undefined){
+      this.Posts.plik = this.file.name;
+    }
   }
 
 //Wyslanie informacji o danych formularza oraz pliku do funkcji dodającej do bazy danych
@@ -199,7 +214,7 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
     if(this.dateSend ==  true && this.procentage < 100){
     this.errorMessage = "Trwa upload wybranego pliku, proszę czekać";
     }else if(this.dateSend ==  false ){
-    if(this.Posts.nazwa != null && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null && this.file != null
+    if(this.Posts.nazwa != undefined && this.Posts.client != null && this.Posts.dotyczy != null && this.Posts.data != null && this.file != null
     && this.Posts.nazwa != "" && this.Posts.client != "" && this.Posts.dotyczy != "" && this.Posts.data != ""){
       var parts = this.Posts.data.split("-");
       var d = new Date();
@@ -215,9 +230,9 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
 			}
 
       if(this.dateSend==false && this.errorMessage == ""){
+      this.toCheckName = true;
       this.crmService.sendPostToDB(this.Posts, this.file);
-      this.dateSend = true;
-     };
+      };
       this.result = true;
     }else{
       this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
@@ -258,7 +273,18 @@ export class CrmKorespondencjaDodajComponent extends DialogComponent<ConfirmMode
    this.crmService.subscribeToGetKleints().subscribe((klients)=>{
    this.klients = klients;
    });
-    this.getSubscriptToProcentage();
+   this.crmService.subscribeToGetPostsFileName().subscribe((nameflle:boolean)=>{
+   this.checkFileName = nameflle;
+   if(this.checkFileName == false && this.toCheckName == true){
+        this.errorMessage += "Plik o podanej nazwie znajduje się już na serwerze!\n";
+        this.toCheckName = false;
+      }
+    else if(this.checkFileName == true){
+      this.sendStart = "Trwa wgrywanie pliku na serwer. Proszę czekać!"
+      this.dateSend = true;
+    }; 
+   });
+   this.getSubscriptToProcentage();
   }
    ngAfterContentInit(){
     if( this.klients == "" || this.klients == null || this.klients == undefined){
