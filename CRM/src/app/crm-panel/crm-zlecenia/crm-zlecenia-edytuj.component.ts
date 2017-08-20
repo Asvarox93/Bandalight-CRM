@@ -107,12 +107,33 @@ export class CrmZleceniaEdytujComponent  extends DialogComponent<ConfirmModel, b
    }
   
    confirm() {
-    if(this.orders.nazwa != null && this.orders.data != null && this.orders.pracownik != null && this.orders.tresc != null && this.orders.nazwa != "" && this.orders.data != "" && this.orders.pracownik != "" && this.orders.tresc != ""){
-    this.crmService.editOrdersToDb(this.UserId,this.orders);
-    this.result = true;
-    this.close();
+     this.errorMessage = "";
+     var trescValidation = new RegExp("^[0-9A-ząśćżźóęńł.,+-- ]{3,100}$");
+
+     if(this.orders.nazwa != null && this.orders.data != null && this.orders.pracownik != null && this.orders.tresc != null 
+      && this.orders.nazwa != "" && this.orders.data != "" && this.orders.pracownik != "" && this.orders.tresc != ""){
+      var parts = this.orders.data.split("-");
+      var d = new Date();;
+      
+      if(parseInt(parts[0]) != d.getFullYear()){
+					this.errorMessage += "Wprowadzony rok nie zgadza się z aktualnym!!\n";
+			 };
+			 if(parseInt(parts[0]) == d.getFullYear() && parseInt(parts[1]) > d.getMonth()+1 ||
+				  parseInt(parts[0]) == d.getFullYear() && parseInt(parts[1]) == d.getMonth()+1 && parseInt(parts[2]) > d.getDate() ){
+					this.errorMessage += "Wprowadzony dzień i/lub miesiąc zakupu pojazdu wybiega w przyszłość!\n";
+       };
+       if(!trescValidation.test(this.orders.tresc)){
+          this.errorMessage += "Treść zlecenia wymaga wproawdzenia przynajmniej 3 znaków / maksimum 100!\n";
+       };
+
+      if(this.errorMessage == ""){
+        this.crmService.editOrdersToDb(this.UserId,this.orders);
+        this.result = true;
+        this.close();
+      }
+    }else{
+        this.errorMessage += "Wszystkie dane muszą zostać wprowadzone!\n";
     }
-    this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
   }
 
   ngOnInit() {

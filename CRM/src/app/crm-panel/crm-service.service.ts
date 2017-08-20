@@ -583,7 +583,7 @@ editProductsToDb(name, data){
   var database = firebase.database(); 
   var ref =  database.ref('/users/'+user.uid+'/products/'+Object.keys(this.$productLists)[name]);
   ref.update(data);
-  this.getCarsFromDb();
+  this.getProductsFromDb();
 }
 
 

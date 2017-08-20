@@ -121,21 +121,35 @@ products;
    }
   //Potwierdzenie dodania produktu i wysłanie danych do funkcji zajmującej się dodaniem produktu do bazy danych 
   confirm() {
-  if(this.products.type != null && this.products.quantity != null && this.products.netto != null 
-    && this.products.type != "" && this.products.quantity != "" && this.products.netto != "" ){
+	 this.errorMessage = "";
+   var nazwaTowaruValidation = new RegExp("^[0-9A-ząśćżźóęńł]{3,20}$");
+   if(this.products.name != null && this.products.type != null && this.products.netto != null 
+    && this.products.name !="" && this.products.type != "" && this.products.netto != "" ){
 			if(this.products.vat == undefined){
 				this.products.vat = 0;
 			}
-			if(this.products.netto < 0 || this.products.vat < 0){
-				this.errorMessage = "Wartość netto i podatek vat nie mogą być mniejsze od zera!";
-			}else{
+			if(!nazwaTowaruValidation.test(this.products.name)){
+				this.errorMessage += "Nazwa produktu jest niepoprawna. Maksymalnie od 3 do 15 znaków!\n"
+			}
+			if(this.products.quantity < 1 || this.products.quantity > 1000000 || this.products.quantity == undefined){
+				this.errorMessage += "Stan magazynowy nie może być mniejszy od 1!\n";
+			}
+			if(this.products.netto < 0 ||  this.products.netto > 1000000){
+				this.errorMessage += "Wartość netto nie może być mniejsze od zera i większe od miliona!\n";
+			}
+			if(this.products.vat < 0 || this.products.vat > 100){
+				this.errorMessage += "Wartość podatku vat nie może być mniejsze od zera i większe od stu!\n";
+			}
+			
+			
+			if(this.errorMessage == ""){
 		    this.products.brutto = (parseFloat(this.products.netto)*(1+(parseFloat(this.products.vat)/100))).toFixed(2);
 		    this.crmService.sendProductToDB(this.products);
 		    this.result = true;
 				this.close();
 		};
 		}else{
-			this.errorMessage = "Wszystkie dane muszą zostać wprowadzone!";
+			this.errorMessage += "Wszystkie dane muszą zostać wprowadzone!\n";
 		}
   }
 
